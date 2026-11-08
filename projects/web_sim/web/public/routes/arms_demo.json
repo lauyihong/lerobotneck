@@ -1,0 +1,131 @@
+{
+ "name": "双臂示范",
+ "from": "home",
+ "speed_dps": 40,
+ "dwell_s": 0.6,
+ "description": "举起双臂、向前伸、张开、右手挥手、夹爪开合，最后收回休息位。",
+ "waypoints": [
+  {
+   "label": "举起双臂",
+   "q": {
+    "left_arm_shoulder_lift": 110,
+    "left_arm_elbow_flex": 70,
+    "left_arm_wrist_flex": 0,
+    "right_arm_shoulder_lift": 110,
+    "right_arm_elbow_flex": 70,
+    "right_arm_wrist_flex": 0
+   }
+  },
+  {
+   "label": "向前伸",
+   "q": {
+    "left_arm_shoulder_lift": 30,
+    "left_arm_elbow_flex": 20,
+    "left_arm_wrist_flex": 0,
+    "right_arm_shoulder_lift": 30,
+    "right_arm_elbow_flex": 20,
+    "right_arm_wrist_flex": 0
+   }
+  },
+  {
+   "label": "张开双臂",
+   "q": {
+    "left_arm_shoulder_lift": 60,
+    "left_arm_elbow_flex": 30,
+    "right_arm_shoulder_lift": 60,
+    "right_arm_elbow_flex": 30,
+    "left_arm_shoulder_pan": -40,
+    "right_arm_shoulder_pan": 40
+   }
+  },
+  {
+   "label": "回中",
+   "q": {
+    "left_arm_shoulder_pan": 0,
+    "right_arm_shoulder_pan": 0
+   }
+  },
+  {
+   "label": "右手举高",
+   "q": {
+    "right_arm_shoulder_lift": 150,
+    "right_arm_elbow_flex": 30,
+    "right_arm_wrist_flex": 30
+   }
+  },
+  {
+   "label": "挥手",
+   "q": {
+    "right_arm_wrist_flex": -10,
+    "right_arm_shoulder_pan": 15
+   },
+   "dwell_s": 0
+  },
+  {
+   "label": "挥手",
+   "q": {
+    "right_arm_wrist_flex": 50,
+    "right_arm_shoulder_pan": -15
+   },
+   "dwell_s": 0
+  },
+  {
+   "label": "挥手",
+   "q": {
+    "right_arm_wrist_flex": -10,
+    "right_arm_shoulder_pan": 15
+   },
+   "dwell_s": 0
+  },
+  {
+   "label": "挥手",
+   "q": {
+    "right_arm_wrist_flex": 30,
+    "right_arm_shoulder_pan": 0
+   }
+  },
+  {
+   "label": "放下右手",
+   "q": {
+    "right_arm_shoulder_lift": 60,
+    "right_arm_elbow_flex": 30,
+    "right_arm_wrist_flex": 0
+   }
+  },
+  {
+   "label": "张开夹爪",
+   "q": {
+    "left_arm_gripper": 60,
+    "left_arm_wrist_roll": 0,
+    "right_arm_gripper": 60,
+    "right_arm_wrist_roll": 0
+   }
+  },
+  {
+   "label": "合上夹爪",
+   "q": {
+    "left_arm_gripper": -22,
+    "left_arm_wrist_roll": 90,
+    "right_arm_gripper": -22,
+    "right_arm_wrist_roll": 90
+   }
+  },
+  {
+   "label": "收回休息位",
+   "q": {
+    "left_arm_shoulder_pan": 0,
+    "left_arm_shoulder_lift": 187,
+    "left_arm_elbow_flex": 179.9,
+    "left_arm_wrist_flex": 50,
+    "left_arm_wrist_roll": 90,
+    "left_arm_gripper": -22,
+    "right_arm_shoulder_pan": 0,
+    "right_arm_shoulder_lift": 187,
+    "right_arm_elbow_flex": 179.9,
+    "right_arm_wrist_flex": 50,
+    "right_arm_wrist_roll": 90,
+    "right_arm_gripper": -22
+   }
+  }
+ ]
+}

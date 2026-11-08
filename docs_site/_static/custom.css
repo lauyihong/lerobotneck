@@ -1,0 +1,4 @@
+/* small tweaks on top of pydata-sphinx-theme */
+.bd-content img { border-radius: 6px; }
+.hero img { width: 100%; max-width: 900px; }
+table.docutils td, table.docutils th { vertical-align: top; }

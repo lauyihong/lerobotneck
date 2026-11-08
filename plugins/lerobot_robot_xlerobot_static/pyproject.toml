@@ -1,0 +1,13 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lerobot_robot_xlerobot_static"
+version = "0.1.0"
+description = "XLeRobot without mobile base (dual SO101 arms + 6-DoF neck v0.1 with D435i) for lerobot: --robot.type=xlerobot_static"
+requires-python = ">=3.10"
+dependencies = ["lerobot[feetech]"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["lerobot_robot_xlerobot_static"]

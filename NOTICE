@@ -1,0 +1,17 @@
+wallerobot
+Copyright 2026 the wallerobot contributors
+
+This product includes software, robot descriptions and 3D models from the following projects, each licensed under
+the Apache License, Version 2.0:
+
+- XLeRobot (https://github.com/Vector-Wangel/XLeRobot)
+  Robot description (simulation/xlerobot/xlerobot.urdf) and meshes, vendored unmodified in hardware/upstream/xlerobot/
+  (see SOURCE.md there for the exact commit); body, tower and neck-housing geometry derived from its CAD.
+
+- SO-ARM100 / SO-ARM101 by TheRobotStudio (https://github.com/TheRobotStudio/SO-ARM100)
+  Arm geometry and meshes, distributed as part of the XLeRobot files above.
+
+- LeRobot by Hugging Face (https://github.com/huggingface/lerobot)
+  The robot plugin in plugins/ is written against the LeRobot robot API.
+
+The browser simulator uses MuJoCo (Apache-2.0, Google DeepMind) and three.js (MIT), installed from npm.

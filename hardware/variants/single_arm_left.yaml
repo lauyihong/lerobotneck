@@ -1,0 +1,5 @@
+# Example variant: left arm only (right arm removed) - 12 joints.
+#     python hardware/build_all.py --config hardware/variants/single_arm_left.yaml --out build/single_arm_left
+arms:
+  right:
+    enabled: false

@@ -1,0 +1,159 @@
+{
+  "robot": "wallerobot static (dual SO101 arms)",
+  "convention": "q_rad = sign * (Present_Position - zero_tick) * 2*pi/4096; grippers linear closed_tick..open_tick -> closed_rad..open_rad; Present_Position includes the EEPROM Homing_Offset",
+  "sources": {
+    "lerobot_calibration": "~/.cache/huggingface/lerobot/calibration/robots/xlerobot_static/xlerobot_static_01.json",
+    "mapping": "projects/sim_isaac/mapping.yaml"
+  },
+  "date": "2026-11-05 19:33:16",
+  "joints": {
+    "left_arm_shoulder_pan": {
+      "id": 1,
+      "port": "COM3",
+      "homing_offset": 534,
+      "range_min": 809,
+      "range_max": 2559,
+      "status": "seed",
+      "type": "revolute",
+      "sign": 1,
+      "zero_tick": 1684,
+      "source": "lerobot midpoint 1684.0 + sim_isaac offset_deg 0.0 (guess)"
+    },
+    "left_arm_shoulder_lift": {
+      "id": 2,
+      "port": "COM3",
+      "homing_offset": 1787,
+      "range_min": 0,
+      "range_max": 4095,
+      "status": "seed",
+      "type": "revolute",
+      "sign": 1,
+      "zero_tick": 2194,
+      "source": "lerobot midpoint 2047.5 + sim_isaac offset_deg 12.9 (rest-on-stop anchor)"
+    },
+    "left_arm_elbow_flex": {
+      "id": 3,
+      "port": "COM3",
+      "homing_offset": 342,
+      "range_min": 0,
+      "range_max": 4095,
+      "status": "seed",
+      "type": "revolute",
+      "sign": 1,
+      "zero_tick": 35,
+      "source": "lerobot midpoint 2047.5 + sim_isaac offset_deg -176.9 (rest-on-stop anchor)"
+    },
+    "left_arm_wrist_flex": {
+      "id": 4,
+      "port": "COM3",
+      "homing_offset": 13,
+      "range_min": 166,
+      "range_max": 2315,
+      "status": "seed",
+      "type": "revolute",
+      "sign": 1,
+      "zero_tick": 1240,
+      "source": "lerobot midpoint 1240.5 + sim_isaac offset_deg 0.0 (guess)"
+    },
+    "left_arm_wrist_roll": {
+      "id": 5,
+      "port": "COM3",
+      "homing_offset": -918,
+      "range_min": 7,
+      "range_max": 4087,
+      "status": "seed",
+      "type": "revolute",
+      "sign": 1,
+      "zero_tick": 2047,
+      "source": "lerobot midpoint 2047.0 + sim_isaac offset_deg 0.0 (guess)"
+    },
+    "left_arm_gripper": {
+      "id": 6,
+      "port": "COM3",
+      "homing_offset": 1581,
+      "range_min": 1981,
+      "range_max": 3495,
+      "status": "seed",
+      "type": "gripper",
+      "closed_tick": 1981,
+      "open_tick": 3495,
+      "closed_rad": 0.0,
+      "open_rad": 1.7,
+      "source": "lerobot range (+ticks = open, hardware.yaml) -> sim_isaac Jaw 0..1.7 rad"
+    },
+    "right_arm_shoulder_pan": {
+      "id": 1,
+      "port": "COM4",
+      "homing_offset": 798,
+      "range_min": 1457,
+      "range_max": 3198,
+      "status": "seed",
+      "type": "revolute",
+      "sign": 1,
+      "zero_tick": 2328,
+      "source": "lerobot midpoint 2327.5 + sim_isaac offset_deg 0.0 (guess)"
+    },
+    "right_arm_shoulder_lift": {
+      "id": 2,
+      "port": "COM4",
+      "homing_offset": -219,
+      "range_min": 0,
+      "range_max": 4095,
+      "status": "seed",
+      "type": "revolute",
+      "sign": 1,
+      "zero_tick": 2126,
+      "source": "lerobot midpoint 2047.5 + sim_isaac offset_deg 6.9 (rest-on-stop anchor)"
+    },
+    "right_arm_elbow_flex": {
+      "id": 3,
+      "port": "COM4",
+      "homing_offset": 829,
+      "range_min": 0,
+      "range_max": 4095,
+      "status": "seed",
+      "type": "revolute",
+      "sign": 1,
+      "zero_tick": 32,
+      "source": "lerobot midpoint 2047.5 + sim_isaac offset_deg -177.2 (rest-on-stop anchor)"
+    },
+    "right_arm_wrist_flex": {
+      "id": 4,
+      "port": "COM4",
+      "homing_offset": 332,
+      "range_min": 351,
+      "range_max": 2051,
+      "status": "seed",
+      "type": "revolute",
+      "sign": 1,
+      "zero_tick": 1201,
+      "source": "lerobot midpoint 1201.0 + sim_isaac offset_deg 0.0 (guess)"
+    },
+    "right_arm_wrist_roll": {
+      "id": 5,
+      "port": "COM4",
+      "homing_offset": -2035,
+      "range_min": 126,
+      "range_max": 3792,
+      "status": "seed",
+      "type": "revolute",
+      "sign": 1,
+      "zero_tick": 1959,
+      "source": "lerobot midpoint 1959.0 + sim_isaac offset_deg 0.0 (guess)"
+    },
+    "right_arm_gripper": {
+      "id": 6,
+      "port": "COM4",
+      "homing_offset": 1505,
+      "range_min": 1991,
+      "range_max": 3529,
+      "status": "seed",
+      "type": "gripper",
+      "closed_tick": 1991,
+      "open_tick": 3529,
+      "closed_rad": 0.0,
+      "open_rad": 1.7,
+      "source": "lerobot range (+ticks = open, hardware.yaml) -> sim_isaac Jaw 0..1.7 rad"
+    }
+  }
+}

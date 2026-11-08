@@ -1,0 +1,77 @@
+# wallerobot v0.1 — robot description configuration.
+#
+# Every geometry / simulation parameter of the generated URDF + MJCF lives here; the build scripts hold no robot numbers.
+# Rebuild everything after an edit:
+#     python hardware/build_all.py                       # this file -> committed outputs
+#     python hardware/build_all.py --config my.yaml --out build/my_variant
+# An override file (--config, or env WALLEROBOT_CONFIG) only needs the keys it changes; it is deep-merged over this file.
+# Units: metres, radians unless the key says _mm / _deg. Paths are relative to the repository root.
+# Frames: wallerobot_body = upstream XLeRobot top_base_link: x = BACKWARD (robot forward is -x), y = left arm side is -y, z up.
+
+name: wallerobot_static
+
+upstream:
+  urdf: hardware/upstream/xlerobot/xlerobot.urdf     # SO101 joint frames / limits / inertias (vendored, see SOURCE.md)
+  meshes: hardware/upstream/xlerobot/meshes
+
+calibration:                                        # per-robot motor calibration (ticks); ships the reference robot's
+  neck: hardware/neck_v0_1/neck_calibration.json      # neck: zero ticks, ranges -> URDF limits, home pose
+  arms: hardware/wallerobot_v0_1/arm_calibration.json # arms: sign / zero tick / ranges -> URDF limits, rest pose
+
+joint_defaults: {effort: 3.35, velocity: 3}         # URDF <limit> (STS3215 12 V stall torque N*m, rad/s)
+
+# ---------------------------------------------------------------------------------------------------------- arms
+# Two stock SO101 arms. mount.xyz = centre of the SO101 Base footprint circle on the body pad (pad top z), mount.yaw_deg =
+# rotation about body z; -90 makes the arm face robot forward (-x) at shoulder_pan = 0. Left and right are independent.
+arms:
+  footprint_centre: [0.0, -0.0229, 0.0]             # SO101 Base.stl footprint circle centre in the Base frame
+  left:
+    enabled: true
+    upstream_chain: L                               # which upstream xlerobot.urdf chain (_L / _R) provides the kinematics
+    mount: {xyz: [-0.090, -0.1329, 0.048], yaw_deg: -90}
+    color: [0.85, 0.85, 0.85, 1]
+  right:
+    enabled: true
+    upstream_chain: R
+    mount: {xyz: [-0.090, 0.1329, 0.048], yaw_deg: -90}
+    color: [0.35, 0.35, 0.38, 1]
+
+# ---------------------------------------------------------------------------------------------------------- neck
+# 6-DoF neck = modified SO101: J1-J3 stock, J3->J4 our new link, J4-J6 stock wrist, J6 -> camera holder.
+neck:
+  mount: {xyz: [-0.05892, -0.00022, 0.33516], rpy_deg: [0, 0, -90]}   # neck_base (SO101 Base frame, J1) in the body frame
+  link34:                                           # the new J3->J4 link (its length / offsets come from these points)
+    stl: hardware/neck_v0_1/wallerobot_new_wrist_dof_0_1.stl
+    j3_axis_mm: [41.0, 23.2, 12.0]                  # J3 fork horn centre, in the STL's own frame
+    j4_shaft_mm: [-20.2, 23.9, 28.85]               # J4 motor non-shaft end on the pocket floor, STL frame
+    side: -1                                        # which face of the link points to +x of the J3 frame (+1 / -1)
+    j4_shaft_sign: -1                               # J4 motor output side faces STL -z (-1) or +z (+1)
+  j5_zero_shift_deg: -90                            # J5 = 0 = camera upright, holder below the J6 housing
+  camera_holder:
+    flip: -1                                        # holder mirrored vs the upstream head-tilt motor (+1 / -1)
+    camera_flip: true                               # D435i rotated 180 deg about its optical axis in the holder
+    axial_shift_mm: -2.5                            # holder offset along the J6 shaft (STS3215 centre difference)
+  placeholder_limit_rad: [-1.57, 1.57]              # used for J4 / J6 only when the calibration file has no entry
+
+# ---------------------------------------------------------------------------------------------------------- cameras
+cameras:
+  head:                                             # RealSense D435i colour stream
+    offset_in_holder_m: [0.025, 0.0, 0.03]          # upstream head_camera_link in head_tilt_link
+    width: 640
+    height: 480
+    vfov_deg: 43.2                                  # measured intrinsics (fy 606.8 px @ 480 px)
+  wrist:                                            # SO101 wrist cameras, both arms
+    width: 640
+    height: 480
+    vfov_deg: 60.0                                  # NOT measured (fitted by eye to the real frames)
+    pitch_deg: 20.0                                 # tilt towards the jaws, NOT measured
+
+# ---------------------------------------------------------------------------------------------------------- simulation
+sim:
+  timestep: 0.002
+  kp: 20.0                                          # position actuator gain, N*m/rad
+  force_limit: 3.35                                 # |actuator torque|, N*m
+  damping: 1.0
+  armature: 0.01
+  desk_z: -0.034                                    # desk plane height in the body frame (body bottom), m
+  rest_pose: projects/sim_mirror/outputs/rest_pose_20261105.json  # q_deg of the folded rest pose: contact excludes

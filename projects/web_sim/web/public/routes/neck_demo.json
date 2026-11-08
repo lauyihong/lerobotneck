@@ -1,0 +1,89 @@
+{
+ "name": "脖子示范（真机 2026-11-06 跑过）",
+ "from": "home",
+ "speed_dps": 25,
+ "dwell_s": 1.0,
+ "description": "和 torque_bringup/neck_home.py --demo 相同的路点（站起、转头、侧摆、滚转、前倾、回 home），速度比真机快（真机 15°/s，这里 25°/s）。真机上 J6 保持放松，这条路线也不动 J6。",
+ "waypoints": [
+  {
+   "label": "站起",
+   "q": {
+    "neck_j1": -5,
+    "neck_j2": 90,
+    "neck_j3": 150,
+    "neck_j4": 0,
+    "neck_j5": 0
+   }
+  },
+  {
+   "label": "向左转头",
+   "q": {
+    "neck_j1": -45
+   }
+  },
+  {
+   "label": "向右转头",
+   "q": {
+    "neck_j1": 35
+   }
+  },
+  {
+   "label": "回中",
+   "q": {
+    "neck_j1": -5
+   }
+  },
+  {
+   "label": "侧摆 A",
+   "q": {
+    "neck_j4": 40
+   }
+  },
+  {
+   "label": "侧摆 B",
+   "q": {
+    "neck_j4": -40
+   }
+  },
+  {
+   "label": "滚转 A",
+   "q": {
+    "neck_j4": 0,
+    "neck_j5": -60
+   }
+  },
+  {
+   "label": "滚转 B",
+   "q": {
+    "neck_j5": 45
+   }
+  },
+  {
+   "label": "侧摆 + 滚转",
+   "q": {
+    "neck_j4": 30,
+    "neck_j5": -30
+   }
+  },
+  {
+   "label": "前倾",
+   "q": {
+    "neck_j2": 55,
+    "neck_j3": 115,
+    "neck_j4": 0,
+    "neck_j5": 0
+   }
+  },
+  {
+   "label": "回 home",
+   "q": {
+    "neck_j1": -5.3,
+    "neck_j2": 186.9,
+    "neck_j3": 180.3,
+    "neck_j4": 1.2,
+    "neck_j5": -1.2,
+    "neck_j6": 8.0
+   }
+  }
+ ]
+}

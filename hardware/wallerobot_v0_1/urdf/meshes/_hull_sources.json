@@ -1,0 +1,21 @@
+{
+ "Base.hull.stl": "b9d126d83a8858223499fa4aeff1f9477409893c",
+ "Base_Motor.hull.stl": "aa5d658e39a6ff2770b28dba6a6addd6d61549f2",
+ "Fixed_Jaw_Motor.hull.stl": "f4ca22b622b3296d4f2784590da0a0f4a85ee41b",
+ "Lower_Arm.hull.stl": "d75e832978846716b921aefd6ff25987175e9232",
+ "Lower_Arm_Motor.hull.stl": "7ee13cd83ea2661349b8cc351c415639a9ea7ea5",
+ "Rotation_Pitch.hull.stl": "39e15473995cca7182b412d21cccab3a2b37bbf8",
+ "Rotation_Pitch_Motor.hull.stl": "e4a887052ff22364ef993a6a6694949bf6a91bdb",
+ "Upper_Arm.hull.stl": "938689e920cad0873d4a9c921451cc081d46157d",
+ "Upper_Arm_Motor.hull.stl": "b85dc014a89873f4d3662b4971825edd95aa5d87",
+ "Wrist_Pitch_Roll.hull.stl": "63378e929191053bac994e0b08472b3e79262b74",
+ "Wrist_Pitch_Roll_Motor.hull.stl": "ccd68ff0e20b770a52e91321736f898a99314fda",
+ "base_body_lower.hull.stl": "e0a377615022b95f6e69c4a2f6560999c84c9d4b",
+ "base_j1_housing.hull.stl": "57a5838b03181d599ba04b8ffdac9538f3820742",
+ "base_tower.hull.stl": "69878756c135df8de652eb807f7a0a104e437a7d",
+ "cam_tilt_housing_softfin.hull.stl": "1c8319ae17fcc7cf0e60093a4402dfb9ddacdcc3",
+ "topbase2.hull.stl": "af20f30ea2f0184b15145c12ea80fb84fe59a432",
+ "tophead5.hull.stl": "0b0f8b1989907eeac1539be0d5cbc45ce685bf16",
+ "tophead6.hull.stl": "610e91fe9b0e51a8cd9d387fad7c0b6a94c42595",
+ "wallerobot_new_wrist_dof_0_1.hull.stl": "aeb753603cd9ac710ae6f0bce87cc8bccf1fa264"
+}

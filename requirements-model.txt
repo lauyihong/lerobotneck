@@ -1,0 +1,6 @@
+# Minimal dependencies to build the robot model (hardware/build_all.py): URDF, MJCF, joint table, web model export.
+numpy==2.2.6
+scipy==1.18.1
+trimesh==5.1.1
+mujoco==3.16.0
+PyYAML==6.0.3

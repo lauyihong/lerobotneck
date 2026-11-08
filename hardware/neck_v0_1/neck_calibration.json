@@ -1,0 +1,181 @@
+{
+  "robot": "wallerobot neck_v0_1",
+  "port": "COM3",
+  "urdf": "hardware/neck_v0_1/urdf/wallerobot_neck.urdf",
+  "convention": "q_rad = sign * (Present_Position - zero_tick) * 2*pi/4096; Present_Position includes the EEPROM Homing_Offset; motor limits = range_min..range_max",
+  "margin_ticks": 40,
+  "eeprom_backup": "hardware/neck_v0_1/calib_backups/eeprom_20261107-215207.json",
+  "joints": {
+    "neck_j1": {
+      "id": 7,
+      "homing_offset": -1861,
+      "range_min": 910,
+      "range_max": 3185,
+      "zero_tick": 1920,
+      "sign": 1,
+      "lower_rad": -1.5493,
+      "upper_rad": 1.9405,
+      "recorded_travel_ticks": 2355,
+      "clipped": false
+    },
+    "neck_j2": {
+      "id": 8,
+      "homing_offset": -1224,
+      "range_min": 895,
+      "range_max": 3200,
+      "zero_tick": 3022,
+      "sign": -1,
+      "lower_rad": -0.273,
+      "upper_rad": 3.2628,
+      "recorded_travel_ticks": 2385,
+      "clipped": false,
+      "zero_fix_imu_20261106": "zero_tick 2942 -> 3022 (file only): D435i gravity fit over 11 torque-held demo poses with J4 +-40, J5 -60..+45 (projects/torque_bringup/outputs/imu_demo_20261106-025434.json; J2 and J6 now separable): delta +7.07 deg, sigma 0.66; rms 3.59 -> 1.12 deg. Supersedes the provisional 2026-11-05 J6 fix (which assumed J2 correct). J2 carries J3 too (parallel axes)."
+    },
+    "neck_j3": {
+      "id": 9,
+      "homing_offset": 1590,
+      "range_min": 1186,
+      "range_max": 2908,
+      "zero_tick": 852,
+      "sign": 1,
+      "lower_rad": 0.5123,
+      "upper_rad": 3.1539,
+      "recorded_travel_ticks": 1802,
+      "clipped": false,
+      "zero_fix_fold_contact_20261107": "zero_tick 1346 -> 852 (file only): after the J3/J4 reassembly + calib_neck, the hand zero put the folded rest at +141.7 deg; set so the rest tick 2958 = +185.1 deg (wrist/upper-arm fold contact, check_fold_contact.py), user confirmed the render. Equals the pre-reassembly zero 948 shifted by the homing change (1590-1505=85 -> 863, 0.97 deg)."
+    },
+    "neck_j4": {
+      "id": 10,
+      "homing_offset": -514,
+      "range_min": 906,
+      "range_max": 3187,
+      "zero_tick": 2042,
+      "sign": -1,
+      "lower_rad": -1.7564,
+      "upper_rad": 1.7426,
+      "recorded_travel_ticks": 2361,
+      "clipped": false,
+      "wrap_lo": 0,
+      "note_register_quirk_20261107": "After the 2026-11-07 reassembly ID 10 reports Present_Position = true + 4096 (bit 12 set; survives a power cycle; ids 7-9/11/12 normal, same fw 3.10/mode 0). wrap_lo 0 -> readers use tick % 4096. Position mode untested with this quirk -> keep J4 limp (removed from hw_server torque_allowed)."
+    },
+    "neck_j5": {
+      "id": 11,
+      "homing_offset": 118,
+      "range_min": 182,
+      "range_max": 3913,
+      "zero_tick": 992,
+      "sign": -1,
+      "lower_rad": -4.4808,
+      "upper_rad": 1.2425,
+      "recorded_travel_ticks": 3811,
+      "clipped": false
+    },
+    "neck_j6": {
+      "id": 12,
+      "homing_offset": -838,
+      "range_min": 1203,
+      "range_max": 2891,
+      "zero_tick": 2115,
+      "sign": 1,
+      "lower_rad": -1.399,
+      "upper_rad": 1.1904,
+      "recorded_travel_ticks": 1768,
+      "clipped": false,
+      "zero_fix_imu_20261105": "zero_tick 2120 -> 2219 (file only, EEPROM untouched): D435i gravity fit over 3 static poses (imu_fit.py, J2 held at its rest-stop anchor, cam roll fixed 0): delta -8.68 deg, sigma 0.45. PROVISIONAL: J2 vs J6 is not separable from these poses (J4/J5 ~ 0) -> re-check with J4/J5 swung poses.",
+      "zero_fix_imu_20261106": "zero_tick 2219 -> 2115 (file only): D435i gravity fit over 11 torque-held demo poses with J4 +-40, J5 -60..+45 (projects/torque_bringup/outputs/imu_demo_20261106-025434.json; J2 and J6 now separable): delta +9.18 deg, sigma 0.70; rms 3.59 -> 1.12 deg. Supersedes the provisional 2026-11-05 J6 fix (which assumed J2 correct). J2 carries J3 too (parallel axes)."
+    }
+  },
+  "history": [
+    {
+      "date": "2026-11-05 00:42:16",
+      "joints": [
+        "neck_j1",
+        "neck_j2",
+        "neck_j3",
+        "neck_j4",
+        "neck_j5",
+        "neck_j6"
+      ]
+    },
+    {
+      "date": "2026-11-05 13:51:58",
+      "joints": [
+        "neck_j3"
+      ],
+      "note": "J3 zero_tick 1108 -> 948 from the fold contact (file only)"
+    },
+    {
+      "date": "2026-11-05 23:03:40",
+      "joints": [
+        "neck_j4",
+        "neck_j6"
+      ],
+      "note": "IMU fit: neck_j4 zero_tick 2076->2037, neck_j6 zero_tick 2120->2219 (file only, provisional)"
+    },
+    {
+      "date": "2026-11-06 02:57:26",
+      "joints": [
+        "neck_j2",
+        "neck_j6"
+      ],
+      "note": "IMU demo fit: neck_j2 zero_tick 2942->3022, neck_j6 zero_tick 2219->2115 (file only)"
+    },
+    {
+      "date": "2026-11-07 21:57:43",
+      "joints": [
+        "neck_j3",
+        "neck_j4"
+      ]
+    },
+    {
+      "date": "2026-11-07 22:10:28",
+      "joints": [
+        "neck_j3",
+        "neck_j4"
+      ],
+      "note": "J3/J4 reassembled -> calib_neck (EEPROM homing/limits), J3 zero 1346->852 from the fold contact (file only), J4 wrap_lo 0 (Present_Position +4096 quirk), home pose re-saved"
+    }
+  ],
+  "poses": {
+    "home": {
+      "date": "2026-11-07 22:05:46",
+      "q_deg": {
+        "neck_j1": 6.77,
+        "neck_j2": 190.2,
+        "neck_j3": 185.1,
+        "neck_j4": 0.18,
+        "neck_j5": 1.58,
+        "neck_j6": 10.72
+      },
+      "ticks": {
+        "neck_j1": 1997,
+        "neck_j2": 858,
+        "neck_j3": 2958,
+        "neck_j4": 2040,
+        "neck_j5": 974,
+        "neck_j6": 2237
+      },
+      "outside_limits": [
+        "neck_j2",
+        "neck_j3"
+      ],
+      "note": "q_deg/ticks = measured rest pose; target_* = clamped into the motor limits (use these as the goal: a joint resting on a mechanical stop must not be commanded further into it)",
+      "target_ticks": {
+        "neck_j1": 1997,
+        "neck_j2": 895,
+        "neck_j3": 2908,
+        "neck_j4": 2040,
+        "neck_j5": 974,
+        "neck_j6": 2237
+      },
+      "target_q_deg": {
+        "neck_j1": 6.77,
+        "neck_j2": 186.94,
+        "neck_j3": 180.7,
+        "neck_j4": 0.18,
+        "neck_j5": 1.58,
+        "neck_j6": 10.72
+      }
+    }
+  }
+}

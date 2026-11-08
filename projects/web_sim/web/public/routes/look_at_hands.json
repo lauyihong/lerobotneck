@@ -1,0 +1,88 @@
+{
+ "name": "看着手（脖子 + 手臂）",
+ "from": "home",
+ "speed_dps": 30,
+ "dwell_s": 0.8,
+ "description": "脖子站起来，左右手轮流伸出，脖子转头和低头去看它，最后全部回 home。",
+ "waypoints": [
+  {
+   "label": "站起 + 抬起双臂",
+   "q": {
+    "neck_j1": -5,
+    "neck_j2": 90,
+    "neck_j3": 150,
+    "neck_j4": 0,
+    "neck_j5": 0,
+    "neck_j6": -20,
+    "left_arm_shoulder_lift": 110,
+    "left_arm_elbow_flex": 70,
+    "left_arm_wrist_flex": 0,
+    "right_arm_shoulder_lift": 110,
+    "right_arm_elbow_flex": 70,
+    "right_arm_wrist_flex": 0
+   }
+  },
+  {
+   "label": "左手伸出，看左边",
+   "q": {
+    "left_arm_shoulder_lift": 40,
+    "left_arm_elbow_flex": 30,
+    "left_arm_shoulder_pan": -30,
+    "neck_j1": -35,
+    "neck_j6": -30
+   }
+  },
+  {
+   "label": "左手收回",
+   "q": {
+    "left_arm_shoulder_lift": 110,
+    "left_arm_elbow_flex": 70,
+    "left_arm_shoulder_pan": 0,
+    "neck_j1": -5
+   }
+  },
+  {
+   "label": "右手伸出，看右边",
+   "q": {
+    "right_arm_shoulder_lift": 40,
+    "right_arm_elbow_flex": 30,
+    "right_arm_shoulder_pan": 30,
+    "neck_j1": 25,
+    "neck_j6": -30
+   }
+  },
+  {
+   "label": "右手收回",
+   "q": {
+    "right_arm_shoulder_lift": 110,
+    "right_arm_elbow_flex": 70,
+    "right_arm_shoulder_pan": 0,
+    "neck_j1": -5,
+    "neck_j6": -20
+   }
+  },
+  {
+   "label": "全部回 home",
+   "q": {
+    "neck_j1": -5.3,
+    "neck_j2": 186.9,
+    "neck_j3": 180.3,
+    "neck_j4": 1.2,
+    "neck_j5": -1.2,
+    "neck_j6": 8.0,
+    "left_arm_shoulder_pan": 0,
+    "left_arm_shoulder_lift": 187,
+    "left_arm_elbow_flex": 179.9,
+    "left_arm_wrist_flex": 50,
+    "left_arm_wrist_roll": 90,
+    "left_arm_gripper": -22,
+    "right_arm_shoulder_pan": 0,
+    "right_arm_shoulder_lift": 187,
+    "right_arm_elbow_flex": 179.9,
+    "right_arm_wrist_flex": 50,
+    "right_arm_wrist_roll": 90,
+    "right_arm_gripper": -22
+   }
+  }
+ ]
+}

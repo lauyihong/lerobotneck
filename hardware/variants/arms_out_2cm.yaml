@@ -1,0 +1,7 @@
+# Example variant: both arm mounts moved 2 cm further out (|y| 132.9 -> 152.9 mm).
+#     python hardware/build_all.py --config hardware/variants/arms_out_2cm.yaml --out build/arms_out_2cm
+arms:
+  left:
+    mount: {xyz: [-0.090, -0.1529, 0.048], yaw_deg: -90}
+  right:
+    mount: {xyz: [-0.090, 0.1529, 0.048], yaw_deg: -90}

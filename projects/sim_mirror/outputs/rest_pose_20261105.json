@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-05 20:40:34",
+  "ticks": {
+    "neck_j1": 1861,
+    "neck_j2": 809,
+    "neck_j3": 3055,
+    "neck_j4": 2021,
+    "neck_j5": 1063,
+    "neck_j6": 2206,
+    "left_arm_shoulder_pan": 2028,
+    "left_arm_shoulder_lift": 2046,
+    "left_arm_elbow_flex": 2054,
+    "left_arm_wrist_flex": 1694,
+    "left_arm_wrist_roll": 1948,
+    "left_arm_gripper": 1997,
+    "right_arm_shoulder_pan": 2045,
+    "right_arm_shoulder_lift": 2059,
+    "right_arm_elbow_flex": 2049,
+    "right_arm_wrist_flex": 1806,
+    "right_arm_wrist_roll": 3201,
+    "right_arm_gripper": 2022
+  },
+  "q_deg": {
+    "neck_j1": -5.19,
+    "neck_j2": 187.47,
+    "neck_j3": 185.19,
+    "neck_j4": 4.83,
+    "neck_j5": -6.24,
+    "neck_j6": 7.56,
+    "left_arm_shoulder_pan": 0.0,
+    "left_arm_shoulder_lift": 187.03,
+    "left_arm_elbow_flex": 180.0,
+    "left_arm_wrist_flex": 50.01,
+    "left_arm_wrist_roll": 90.0,
+    "left_arm_gripper": -22.0,
+    "right_arm_shoulder_pan": 0.0,
+    "right_arm_shoulder_lift": 187.03,
+    "right_arm_elbow_flex": 180.0,
+    "right_arm_wrist_flex": 50.01,
+    "right_arm_wrist_roll": 90.0,
+    "right_arm_gripper": -22.0
+  }
+}

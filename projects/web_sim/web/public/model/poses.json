@@ -1,0 +1,113 @@
+{
+ "source": "neck_calibration.json poses.home target_ticks + arm_calibration.json rest_pose (clamped into the MJCF ranges)",
+ "joints": [
+  {
+   "name": "neck_j1",
+   "lower": -1.5493,
+   "upper": 1.9405,
+   "home": 0.11812
+  },
+  {
+   "name": "neck_j2",
+   "lower": -0.273,
+   "upper": 3.2628,
+   "home": 3.26278
+  },
+  {
+   "name": "neck_j3",
+   "lower": 0.5123,
+   "upper": 3.1539,
+   "home": 3.15386
+  },
+  {
+   "name": "neck_j4",
+   "lower": -1.7564,
+   "upper": 1.7426,
+   "home": 0.00307
+  },
+  {
+   "name": "neck_j5",
+   "lower": -4.4808,
+   "upper": 1.2425,
+   "home": 0.02761
+  },
+  {
+   "name": "neck_j6",
+   "lower": -1.399,
+   "upper": 1.1904,
+   "home": 0.18715
+  },
+  {
+   "name": "left_arm_shoulder_pan",
+   "lower": -1.8699,
+   "upper": 0.8145,
+   "home": 0.0
+  },
+  {
+   "name": "left_arm_shoulder_lift",
+   "lower": -0.22,
+   "upper": 3.37,
+   "home": 3.26431
+  },
+  {
+   "name": "left_arm_elbow_flex",
+   "lower": -0.22,
+   "upper": 3.14,
+   "home": 3.14
+  },
+  {
+   "name": "left_arm_wrist_flex",
+   "lower": -1.4711,
+   "upper": 1.6581,
+   "home": 0.87284
+  },
+  {
+   "name": "left_arm_wrist_roll",
+   "lower": -1.4067,
+   "upper": 2.8412,
+   "home": 1.5708
+  },
+  {
+   "name": "left_arm_gripper",
+   "lower": -0.384,
+   "upper": 1.7453,
+   "home": -0.384
+  },
+  {
+   "name": "right_arm_shoulder_pan",
+   "lower": -0.902,
+   "upper": 1.7687,
+   "home": 0.0
+  },
+  {
+   "name": "right_arm_shoulder_lift",
+   "lower": -0.22,
+   "upper": 3.37,
+   "home": 3.26431
+  },
+  {
+   "name": "right_arm_elbow_flex",
+   "lower": -0.22,
+   "upper": 3.14,
+   "home": 3.14
+  },
+  {
+   "name": "right_arm_wrist_flex",
+   "lower": -1.3591,
+   "upper": 1.2487,
+   "home": 0.87284
+  },
+  {
+   "name": "right_arm_wrist_roll",
+   "lower": -2.7438,
+   "upper": 2.4774,
+   "home": 1.5708
+  },
+  {
+   "name": "right_arm_gripper",
+   "lower": -0.384,
+   "upper": 1.7453,
+   "home": -0.384
+  }
+ ]
+}
