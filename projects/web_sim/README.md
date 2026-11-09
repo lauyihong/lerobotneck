@@ -5,8 +5,8 @@ talks to hardware. One build, two apps:
 
 | URL | what | source |
 |---|---|---|
-| https://lauyihong.github.io/wallerobot/ | **LeRobotNeck** showcase: the neck demo (home), `play/` neck simulator, `neck/` exploded view | `web/index.html`, `play/`, `neck/`, `src/neck/` |
-| https://lauyihong.github.io/wallerobot/sim/ | full wallerobot simulator (two arms + neck) | `web/sim/index.html`, `src/main.js` |
+| https://lauyihong.github.io/lerobotneck/ | **LeRobotNeck** showcase: the neck demo (home), `play/` neck simulator, `neck/` exploded view | `web/index.html`, `play/`, `neck/`, `src/neck/` |
+| https://lauyihong.github.io/lerobotneck/sim/ | full wallerobot simulator (two arms + neck) | `web/sim/index.html`, `src/main.js` |
 
 The docs are served next to them at `/docs/` (see `.github/workflows/pages.yml`).
 

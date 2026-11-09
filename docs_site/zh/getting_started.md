@@ -15,8 +15,8 @@
 只需要 Python 3.10 或更新版本，不需要整套机器人学习环境。
 
 ```bash
-git clone https://github.com/lauyihong/wallerobot.git
-cd wallerobot
+git clone https://github.com/lauyihong/lerobotneck.git
+cd lerobotneck
 pip install -r requirements-model.txt
 python hardware/build_all.py --check
 ```

@@ -12,7 +12,7 @@ import { neckPage } from './explode.js';
 const ROOT = new URL(document.documentElement.dataset.root ?? './', location.href);
 const PATHS = { home: '', play: 'play/', neck: 'neck/' };
 export const DOCS = new URL('docs/', ROOT).href;
-export const GITHUB = 'https://github.com/lauyihong/wallerobot';
+export const GITHUB = 'https://github.com/lauyihong/lerobotneck';
 
 const $ = (s) => document.querySelector(s);
 export const el = (tag, attrs = {}, ...kids) => {
@@ -121,7 +121,7 @@ async function main() {
       el('a', { class: 'brand', href: ctx.href('home'), onclick: (e) => { e.preventDefault(); go('home'); } },
         el('span', { class: 'logo' }), el('span', { class: 'name' }, 'LeRobotNeck')),
       el('nav', {}, link('home'), link('play'), link('neck'),
-        el('a', { href: DOCS }, t('nav.docs')), el('a', { href: GITHUB, rel: 'noopener' }, t('nav.github'))),
+        el('a', { href: DOCS }, t('nav.docs')), el('a', { href: GITHUB, rel: 'noopener', class: 'gh' }, t('nav.github'))),
       el('button', { class: 'lang', onclick: () => setLang(getLang() === 'en' ? 'zh' : 'en') }, t('lang.other')),
     );
   }

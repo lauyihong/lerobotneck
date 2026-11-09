@@ -7,11 +7,11 @@ wallerobot is an open, **configurable** robot description for a stationary XLeRo
 MuJoCo model and a browser simulator from the same numbers. You change the robot by editing that file instead of
 patching a simulator.
 
-- **LeRobotNeck:** [showcase website](https://lauyihong.github.io/wallerobot/): the 6-DoF neck on its own, with
+- **LeRobotNeck:** [showcase website](https://lauyihong.github.io/lerobotneck/): the 6-DoF neck on its own, with
   live demos, a neck simulator, and an exploded view of how one SO101 arm plus two new prints becomes the neck.
-- **Try it:** [browser simulator](https://lauyihong.github.io/wallerobot/sim/). It runs MuJoCo in the page, with
+- **Try it:** [browser simulator](https://lauyihong.github.io/lerobotneck/sim/). It runs MuJoCo in the page, with
   nothing to install.
-- **Docs:** [https://lauyihong.github.io/wallerobot/docs/](https://lauyihong.github.io/wallerobot/docs/), in English and 中文.
+- **Docs:** [https://lauyihong.github.io/lerobotneck/docs/](https://lauyihong.github.io/lerobotneck/docs/), in English and 中文.
 
 | | |
 |---|---|

@@ -15,8 +15,8 @@ Open the {site}`browser simulator <sim/>`. It needs no install and also works on
 You only need Python 3.10 or newer. The robot-learning stack is not needed.
 
 ```bash
-git clone https://github.com/lauyihong/wallerobot.git
-cd wallerobot
+git clone https://github.com/lauyihong/lerobotneck.git
+cd lerobotneck
 pip install -r requirements-model.txt
 python hardware/build_all.py --check
 ```

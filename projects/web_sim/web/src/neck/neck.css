@@ -134,7 +134,7 @@ h1, h2, h3 { margin: 0; line-height: 1.15; }
 @media (max-width: 760px) {
   #nav { gap: 10px; padding: 8px 12px; }
   #nav nav a { padding: 4px 7px; font-size: 13px; }
-  #nav nav a[href*="github"], #nav nav a:first-child { display: none; }
+  #nav nav a.gh, #nav nav a:first-child { display: none; }   /* class, not href: the site itself is on github.io */
   .home .hero { top: auto; bottom: 62px; transform: none; left: 8px; right: 8px; max-width: none; padding: 14px 16px;
     background: var(--card); backdrop-filter: blur(10px); border-radius: 16px; box-shadow: var(--shadow); }
   .home h1 { font-size: 38px; }

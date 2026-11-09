@@ -11,8 +11,8 @@ import os
 OWNER = "lauyihong"           # filled in by tools/export_public.py --owner
 if "{" in OWNER:
     OWNER = "OWNER"
-REPO = f"https://github.com/{OWNER}/wallerobot"
-SITE = f"https://{OWNER}.github.io/wallerobot/"
+REPO = f"https://github.com/{OWNER}/lerobotneck"
+SITE = f"https://{OWNER}.github.io/lerobotneck/"
 DOCS = SITE + "docs/"
 
 project = "wallerobot"
