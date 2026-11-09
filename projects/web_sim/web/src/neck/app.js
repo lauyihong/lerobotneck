@@ -70,13 +70,19 @@ async function main() {
     mesh.material.roughness = 0.5;
   }
 
-  // a few things on the desk for the D435i to look at (three.js only, not in the MuJoCo model)
-  const deskZ = view.floor?.position.z ?? 0;
-  for (const [x, y, sx, sy, sz, c] of [[-0.36, 0.1, 0.05, 0.05, 0.05, 0xff6a13], [-0.42, -0.08, 0.04, 0.07, 0.03, 0x2a6df4],
-    [-0.5, 0.02, 0.035, 0.035, 0.08, 0x1a9e6b], [-0.3, -0.16, 0.06, 0.04, 0.02, 0xf2c230]]) {
-    const b = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), new THREE.MeshStandardMaterial({ color: c, roughness: 0.55 }));
-    b.position.set(x, y, deskZ + sz / 2); b.rotation.z = x * 7; b.castShadow = b.receiveShadow = true; view.world.add(b);
-  }
+  // things on the desk for the D435i to look at: the green block and the box of the active-perception demos and a
+  // few more (routes_neck/scene.json from scripts/make_neck_routes.py; three.js only, not in the MuJoCo model)
+  fetch(new URL('routes_neck/scene.json', ROOT)).then((r) => r.json()).then(({ props }) => {
+    for (const p of props) {
+      const s = p.size;
+      const geo = p.shape === 'sphere' ? new THREE.SphereGeometry(s[0], 24, 16)
+        : p.shape === 'cylinder' ? new THREE.CylinderGeometry(s[0], s[0], s[1], 28).rotateX(Math.PI / 2)   // axis along z
+          : new THREE.BoxGeometry(...s);
+      const b = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: p.color, roughness: 0.55 }));
+      b.position.set(...p.pos); b.rotation.z = p.yaw ?? 0; b.castShadow = b.receiveShadow = true; b.name = p.id;
+      view.world.add(b);
+    }
+  }).catch((e) => console.warn('desk scene', e));
 
   const ctx = {
     sim, view, ROOT, el, t,
@@ -113,7 +119,7 @@ async function main() {
       onclick: (e) => { if (e.metaKey || e.ctrlKey) return; e.preventDefault(); go(name); } }, t(`nav.${name}`));
     nav.append(
       el('a', { class: 'brand', href: ctx.href('home'), onclick: (e) => { e.preventDefault(); go('home'); } },
-        el('span', { class: 'logo' }), 'LeRobotNeck'),
+        el('span', { class: 'logo' }), el('span', { class: 'name' }, 'LeRobotNeck')),
       el('nav', {}, link('home'), link('play'), link('neck'),
         el('a', { href: DOCS }, t('nav.docs')), el('a', { href: GITHUB, rel: 'noopener' }, t('nav.github'))),
       el('button', { class: 'lang', onclick: () => setLang(getLang() === 'en' ? 'zh' : 'en') }, t('lang.other')),
@@ -138,7 +144,7 @@ async function main() {
     // keep the robot clear of each page's text / panel on wide screens
     const wide = innerWidth > 760;
     view.shiftTarget = wide ? ({ home: 0.2, play: -0.17, neck: 0.14 }[ctx.page] ?? 0) : 0;
-    view.shiftYTarget = wide ? 0 : ({ home: 0.2, play: 0.22, neck: 0.16 }[ctx.page] ?? 0);   // phones: UI at the bottom
+    view.shiftYTarget = wide ? 0 : ({ home: 0.2, play: 0.1, neck: 0.16 }[ctx.page] ?? 0);   // phones: UI at the bottom
     current?.update?.(dt);
     sim.step(dt);
     view.draw(current?.helpers ?? []);

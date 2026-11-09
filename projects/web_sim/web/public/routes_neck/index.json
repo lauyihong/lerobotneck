@@ -2,6 +2,8 @@
  "demos": [
   "wake_up",
   "look_around",
+  "inspect_block",
+  "peek_box",
   "nod_shake",
   "curious_tilt",
   "peek_desk",

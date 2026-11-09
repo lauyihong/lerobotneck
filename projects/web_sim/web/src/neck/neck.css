@@ -74,6 +74,9 @@ h1, h2, h3 { margin: 0; line-height: 1.15; }
   background: var(--card); backdrop-filter: blur(10px); border-radius: 16px; box-shadow: var(--shadow); display: grid; gap: 10px; align-content: start;
 }
 .play h2 { font-size: 20px; }
+.play .head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.play .sheet-toggle { display: none; }
+.play .more { display: grid; gap: 10px; }
 .play h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); margin-top: 6px; }
 .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .card { font: inherit; text-align: left; border: 1px solid var(--line); background: var(--card-solid); border-radius: 12px; padding: 9px 10px; cursor: pointer; display: grid; gap: 3px; }
@@ -99,8 +102,8 @@ h1, h2, h3 { margin: 0; line-height: 1.15; }
 .rec summary { cursor: pointer; font-size: 13px; color: var(--muted); }
 .rec .row { margin-top: 8px; }
 .pip-frame { position: absolute; border: 2px solid #fff; border-radius: 6px; box-shadow: var(--shadow); pointer-events: none !important; }
-.pip-frame span { position: absolute; left: 6px; top: -24px; font-size: 12px; color: var(--muted); }
-.pip-frame .chip { position: absolute; right: 4px; top: -27px; pointer-events: auto; }
+.pip-frame span { position: absolute; left: 6px; bottom: 5px; z-index: 1; padding: 0 7px; border-radius: 6px; background: rgba(255, 255, 255, 0.85); font-size: 12px; color: var(--muted); }
+.pip-frame .chip { position: absolute; right: 5px; top: 5px; pointer-events: auto; }
 .guide { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(20, 24, 30, 0.22); }
 .guide-card { width: min(360px, calc(100vw - 32px)); background: var(--card-solid); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); display: grid; gap: 6px; }
 .guide-card small { color: var(--accent); font-weight: 650; }
@@ -132,11 +135,30 @@ h1, h2, h3 { margin: 0; line-height: 1.15; }
   #nav { gap: 10px; padding: 8px 12px; }
   #nav nav a { padding: 4px 7px; font-size: 13px; }
   #nav nav a[href*="github"], #nav nav a:first-child { display: none; }
-  .home .hero { top: auto; bottom: 64px; transform: none; left: 16px; right: 16px; max-width: none; }
+  .home .hero { top: auto; bottom: 62px; transform: none; left: 8px; right: 8px; max-width: none; padding: 14px 16px;
+    background: var(--card); backdrop-filter: blur(10px); border-radius: 16px; box-shadow: var(--shadow); }
+  .home h1 { font-size: 38px; }
   .home .lead { font-size: 15px; margin: 8px 0 12px; }
   .home .stats { margin-bottom: 14px; }
   .home .hint, .home .status { display: none; }
-  .play .panel { top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; max-height: 52vh; }
+  #nav .brand .name { display: none; }
+  /* simulator: a compact bottom sheet (demo strip + transport); joints, poses, recorder behind the toggle */
+  .play .panel { top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; max-height: 38vh; padding: 10px 12px; gap: 7px; border-radius: 14px; }
+  .play .panel.open { max-height: 62vh; }
+  .play .panel:not(.open) .more { display: none; }
+  .play .sub, .play .demos-h, .play .keys { display: none; }
+  .play h2 { font-size: 16px; }
+  .play .sheet-toggle { display: inline-flex; padding: 4px 12px; font-size: 13px; }
+  .cards { display: flex; overflow-x: auto; gap: 6px; scrollbar-width: none; margin: 0 -12px; padding: 0 12px; }
+  .cards::-webkit-scrollbar { display: none; }
+  .card { flex: 0 0 auto; padding: 6px 11px; border-radius: 999px; }
+  .card b { font-size: 13px; white-space: nowrap; }
+  .card span { display: none; }
+  .transport .now { font-size: 12.5px; min-height: 0; }
+  .wps { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .wp { flex: 0 0 auto; }
+  .note { font-size: 12.5px; padding: 6px 9px; }
+  .pip-frame span { font-size: 11px; }
   .neck .story { left: 8px; right: 8px; width: auto; bottom: 34px; padding: 14px; }
   .neck .story h2 { font-size: 19px; }
   .lbl span { font-size: 11px; padding: 2px 6px; }

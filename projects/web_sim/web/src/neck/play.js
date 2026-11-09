@@ -6,7 +6,8 @@ import { RoutePlayer, Recorder } from '../routes.js';
 import { t, tr } from './i18n.js';
 import { READY, deg } from './app.js';
 
-export const PLAY_VIEW = { pos: [-0.78, 0.72, 0.5], target: [-0.05, 0.5, 0.07] };
+// front-right three-quarter view that keeps the neck and the desk objects (block, box) in frame
+export const PLAY_VIEW = { pos: [-0.8, 0.8, 0.7], target: [-0.18, 0.34, 0.02] };
 const JOINT_SPEED = 50 * DEG;
 
 export function playPage(ctx) {
@@ -14,7 +15,8 @@ export function playPage(ctx) {
   const player = new RoutePlayer(sim);
   const rec = new Recorder(sim);
   const demos = [];   // {id, route}
-  let fullPlan = null, ui = null, active = null, active_id = null, paused = false, pauseQ = null, adjusted = new Set(), sel = 0, big = false;
+  let fullPlan = null, ui = null, active = null, active_id = null, paused = false, pauseQ = null, adjusted = new Set(), sel = 0, big = false, open = false;
+  const setBig = (b) => { big = b; view.pip.scale = big ? (innerWidth <= 760 ? 1.45 : 1.3) : 1; };
   const keys = new Set();
   const names = sim.joints.map((j) => j.name);
 
@@ -65,14 +67,18 @@ export function playPage(ctx) {
         el('button', { class: 'btn ghost', disabled: !rec.waypoints.length, onclick: download }, t('play.rec.save')),
         el('button', { class: 'btn ghost', disabled: !rec.waypoints.length, onclick: () => { rec.clear(); build(); } }, t('play.rec.clear'))));
 
+    // on phones the panel is a bottom sheet: demos + transport always, joints etc. behind the "Joints" toggle
     ui = el('section', { class: 'play' },
       el('div', { class: 'pip-frame', id: 'pipf' }, el('span', {}, t('play.cam')),
-        el('button', { class: 'chip', onclick: () => { big = !big; view.pip.scale = big ? 1.7 : 1; build(); } }, big ? t('play.cam.small') : t('play.cam.big'))),
-      el('aside', { class: 'panel' },
-        el('h2', {}, t('play.title')), el('p', { class: 'muted' }, t('play.sub')),
-        el('h3', {}, t('play.demos')), cards, transport, wps, note,
-        el('h3', {}, t('play.joints')), joints, poses, recBox,
-        el('p', { class: 'muted small' }, t('play.keys'))));
+        el('button', { class: 'chip', onclick: () => { setBig(!big); build(); } }, big ? t('play.cam.small') : t('play.cam.big'))),
+      el('aside', { class: `panel${open ? ' open' : ''}` },
+        el('div', { class: 'head' }, el('h2', {}, t('play.title')),
+          el('button', { class: 'btn ghost sheet-toggle', onclick: () => { open = !open; build(); } }, open ? `▾ ${t('play.less')}` : `▴ ${t('play.more')}`)),
+        el('p', { class: 'muted sub' }, t('play.sub')),
+        el('h3', { class: 'demos-h' }, t('play.demos')), cards, transport, wps, note,
+        el('div', { class: 'more' },
+          el('h3', {}, t('play.joints')), joints, poses, recBox,
+          el('p', { class: 'muted small keys' }, t('play.keys')))));
     document.querySelector('#ui').replaceChildren(ui);
     refresh();
     maybeGuide();
@@ -95,7 +101,9 @@ export function playPage(ctx) {
   // ---------- demo control
   function startDemo(d) {
     active = d.route; active_id = d.id; paused = false; adjusted.clear();
+    if (d.route.camera_inset === 'big') setBig(true);   // the active-perception demos are about what the D435i sees
     player.load(d.route); fullPlan = player.plan; player.play(); build();
+    ui.querySelector('.card.on')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
   function togglePlay() {
     if (!active) return;
@@ -185,12 +193,12 @@ export function playPage(ctx) {
       addEventListener('keydown', onKey); addEventListener('keyup', onKey);
     },
     exit() {
-      player.stop(); paused = false; adjusted.clear(); active = null; active_id = null; view.pip.on = false; view.pip.top = null; view.pip.scale = 1; big = false; view.highlightBody(null);
+      player.stop(); paused = false; adjusted.clear(); active = null; active_id = null; view.pip.on = false; view.pip.top = null; view.pip.scale = 1; big = false; open = false; view.highlightBody(null);
       cv.removeEventListener('pointerdown', onDown); cv.removeEventListener('pointerup', onUp);
       removeEventListener('keydown', onKey); removeEventListener('keyup', onKey); keys.clear();
     },
     update(dt) {
-      view.pip.top = innerWidth <= 760 ? 80 : null;   // phones: the panel is a bottom sheet, inset goes to the top
+      view.pip.top = innerWidth <= 760 ? 54 : 62;   // top left under the nav: the desk objects stay visible below it
       // keyboard jog (pauses a running demo like the sliders)
       const jog = (n, s) => setJoint(n, sim.target[n] + s * JOINT_SPEED * dt * (keys.has('ShiftLeft') ? 2.5 : 1));
       if (keys.has('ArrowLeft')) jog('neck_j1', -1); if (keys.has('ArrowRight')) jog('neck_j1', 1);

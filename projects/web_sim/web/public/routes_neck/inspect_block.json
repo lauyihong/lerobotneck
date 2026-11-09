@@ -1,0 +1,105 @@
+{
+ "name": {
+  "en": "Circle the green block",
+  "zh": "环绕观察绿色方块"
+ },
+ "description": {
+  "en": "Active perception: the neck moves the D435i around the block to see its sides and top, and finds the sticker on the side it could not see.",
+  "zh": "主动感知：脖子带着 D435i 绕方块转，从侧面和上面看它，找到原来看不到的那一面上的贴纸。"
+ },
+ "from": "current",
+ "speed_dps": 35,
+ "dwell_s": 1.0,
+ "camera_inset": "big",
+ "waypoints": [
+  {
+   "label": {
+    "en": "Ready",
+    "zh": "准备姿势"
+   },
+   "q": {
+    "neck_j1": 0,
+    "neck_j2": 90,
+    "neck_j3": 150,
+    "neck_j4": 0,
+    "neck_j5": 0,
+    "neck_j6": -25
+   },
+   "dwell_s": 0.3
+  },
+  {
+   "label": {
+    "en": "Front",
+    "zh": "正面"
+   },
+   "q": {
+    "neck_j1": 35.2,
+    "neck_j2": 17.7,
+    "neck_j3": 119.5,
+    "neck_j4": 8.1,
+    "neck_j5": -33.9,
+    "neck_j6": -57.1
+   },
+   "dwell_s": 1.2
+  },
+  {
+   "label": {
+    "en": "Outer side: a sticker!",
+    "zh": "外侧：发现一张贴纸"
+   },
+   "q": {
+    "neck_j1": 34.7,
+    "neck_j2": 10.1,
+    "neck_j3": 88.7,
+    "neck_j4": -21.2,
+    "neck_j5": -78.1,
+    "neck_j6": -8.3
+   },
+   "dwell_s": 1.2
+  },
+  {
+   "label": {
+    "en": "From above",
+    "zh": "从上面看"
+   },
+   "q": {
+    "neck_j1": 28.6,
+    "neck_j2": 26.4,
+    "neck_j3": 78.8,
+    "neck_j4": -28.8,
+    "neck_j5": -32.6,
+    "neck_j6": 41.4
+   },
+   "dwell_s": 1.2
+  },
+  {
+   "label": {
+    "en": "Inner side",
+    "zh": "内侧"
+   },
+   "q": {
+    "neck_j1": -18.4,
+    "neck_j2": -7.1,
+    "neck_j3": 80.2,
+    "neck_j4": -14.1,
+    "neck_j5": -90.9,
+    "neck_j6": 56.2
+   },
+   "dwell_s": 1.2
+  },
+  {
+   "label": {
+    "en": "Ready",
+    "zh": "准备姿势"
+   },
+   "q": {
+    "neck_j1": 0,
+    "neck_j2": 90,
+    "neck_j3": 150,
+    "neck_j4": 0,
+    "neck_j5": 0,
+    "neck_j6": -25
+   }
+  }
+ ]
+}

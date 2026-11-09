@@ -17,7 +17,10 @@ The docs are served next to them at `/docs/` (see `.github/workflows/pages.yml`)
 - Model: `web/public/model_neck/`, exported by `scripts/export_assets.py --neck` from the
   `hardware/variants/lerobotneck.yaml` variant (`build_all.py` does it), plus a hidden copy of a stock SO101 arm
   (`stock_*` bodies) for the exploded view. Kinematic only (no contacts).
-- Demos: `web/public/routes_neck/*.json`, written by `scripts/make_neck_routes.py` (labels in English and Chinese).
+- Demos and desk scene: `web/public/routes_neck/*.json` (`scene.json` = the objects on the desk), written by
+  `scripts/make_neck_routes.py` (labels in English and Chinese). The two active-perception demos (circle the green
+  block, look inside the box) are solved with inverse kinematics on `model_neck`, and the script checks with ray
+  tests that the things in the box are hidden from the ready pose and seen from the solved viewpoints.
 - UI text: `src/neck/i18n.js` (English first, Chinese; follows the browser language, switch in the top bar).
 
 ## Full simulator
