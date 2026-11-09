@@ -51,7 +51,7 @@ ROUTES = {
         "name": L("Look around", "环顾四周"),
         "description": L("Scan the room with J1 and tilt the D435i with J6. Watch the camera inset.",
                          "用 J1 扫视、J6 俯仰 D435i，看看相机小窗里的画面。"),
-        "from": "current", "speed_dps": 45, "dwell_s": 0.7, "waypoints": [
+        "from": "home", "speed_dps": 45, "dwell_s": 0.7, "waypoints": [
             wp("Ready", "准备姿势", READY),
             wp("Look left", "看左边", {"neck_j1": -55, "neck_j6": -20}),
             wp("Look up", "抬头", {"neck_j6": -55}),
@@ -61,7 +61,7 @@ ROUTES = {
     "nod_shake": {
         "name": L("Yes and no", "点头和摇头"),
         "description": L("A quick nod (J6) and a head shake (J1).", "快速点头（J6），再摇头（J1）。"),
-        "from": "current", "speed_dps": 90, "dwell_s": 0, "waypoints": [
+        "from": "home", "speed_dps": 90, "dwell_s": 0, "waypoints": [
             wp("Ready", "准备姿势", READY, dwell_s=0.5),
             wp("Nod", "点头", {"neck_j6": 5}, duration_s=0.4),
             wp("Nod", "点头", {"neck_j6": -40}, duration_s=0.45),
@@ -75,7 +75,7 @@ ROUTES = {
         "name": L("Curious tilt", "好奇地歪头"),
         "description": L("Side tilt with J4, the motion the new J3-J4 link adds, plus a J5 roll.",
                          "用 J4 侧摆（新 J3–J4 连杆带来的动作），再加上 J5 滚转。"),
-        "from": "current", "speed_dps": 35, "dwell_s": 1.0, "waypoints": [
+        "from": "home", "speed_dps": 35, "dwell_s": 1.0, "waypoints": [
             wp("Ready", "准备姿势", READY, dwell_s=0.4),
             wp("Tilt left", "向左歪头", {"neck_j4": 32, "neck_j5": -12, "neck_j6": -15}),
             wp("Tilt right", "向右歪头", {"neck_j4": -32, "neck_j5": 12}),
@@ -86,7 +86,7 @@ ROUTES = {
         "name": L("Peek at the desk", "探身看桌面"),
         "description": L("Lean forward with J2/J3 and look down at the desk in front of the tower.",
                          "用 J2/J3 前倾，低头看竖塔前面的桌面。"),
-        "from": "current", "speed_dps": 35, "dwell_s": 0.9, "waypoints": [
+        "from": "home", "speed_dps": 35, "dwell_s": 0.9, "waypoints": [
             wp("Ready", "准备姿势", READY, dwell_s=0.3),
             wp("Lean forward", "向前探身", {"neck_j2": 55, "neck_j3": 115, "neck_j6": 15}),
             wp("Look left", "往左看", {"neck_j1": -25}),
@@ -256,7 +256,7 @@ def perception_routes():
         "description": L("Active perception: the neck moves the D435i around the block to see its sides and top, and "
                          "finds the sticker on the side it could not see.",
                          "主动感知：脖子带着 D435i 绕方块转，从侧面和上面看它，找到原来看不到的那一面上的贴纸。"),
-        "from": "current", "speed_dps": 35, "dwell_s": 1.0, "camera_inset": "big", "waypoints": wps}
+        "from": "home", "speed_dps": 35, "dwell_s": 1.0, "camera_inset": "big", "waypoints": wps}
     # the sticker faces away from the ready pose
     if nk.sees(ready, sticker, [block_box]):
         problems.append("sticker already visible from the ready pose")
@@ -292,7 +292,7 @@ def perception_routes():
         "description": L("Active perception: from where it stands the box walls hide what is inside, so the neck leans "
                          "over the box and looks at each thing in it.",
                          "主动感知：站在原地只能看到盒子的墙，于是脖子探身到盒子上方，逐个看清里面的东西。"),
-        "from": "current", "speed_dps": 35, "dwell_s": 1.0, "camera_inset": "big", "waypoints": wps}
+        "from": "home", "speed_dps": 35, "dwell_s": 1.0, "camera_inset": "big", "waypoints": wps}
     return out, props, report, problems
 
 

@@ -188,7 +188,7 @@ export function playPage(ctx) {
       sim.speed = 70 * DEG; build(); view.pip.on = true;
       ctx.flyTo(PLAY_VIEW.pos, PLAY_VIEW.target, 1.3);
       player.text = { toStart: t('play.toStart'), done: t('play.done'), dwell: (l) => t('play.dwell', { l: tr(l) }) };
-      if (!active) sim.setTargets(deg(READY));
+      if (!active) sim.setTargets(sim.home);   // start folded (the rest pose); every demo also starts from it
       cv.addEventListener('pointerdown', onDown); cv.addEventListener('pointerup', onUp);
       addEventListener('keydown', onKey); addEventListener('keyup', onKey);
     },

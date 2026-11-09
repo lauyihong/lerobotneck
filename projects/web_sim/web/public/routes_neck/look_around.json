@@ -7,7 +7,7 @@
   "en": "Scan the room with J1 and tilt the D435i with J6. Watch the camera inset.",
   "zh": "用 J1 扫视、J6 俯仰 D435i，看看相机小窗里的画面。"
  },
- "from": "current",
+ "from": "home",
  "speed_dps": 45,
  "dwell_s": 0.7,
  "waypoints": [

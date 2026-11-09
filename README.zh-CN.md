@@ -1,15 +1,15 @@
-# wallerobot
+# LeRobotNeck
 
 [English](README.md) · **中文**
 
-wallerobot 是一套开源、**可配置**的机器人描述，对应一台固定式的 XLeRobot 变体：
+LeRobotNeck 是一套开源、**可配置**的机器人描述，对应一台固定式的 XLeRobot 变体：
 - 两条 SO101 机械臂；
 - 一个 6 自由度的"脖子"，末端装 Intel RealSense D435i；
 - **没有移动底盘**。
 
-URDF、MuJoCo 模型和网页模拟器都从同一个 YAML 文件生成。想改机器人，就改这个文件，不用去改仿真器的源码。
+URDF、MuJoCo 模型和网页模拟器都从同一个 YAML 文件生成。想改机器人，就改这个文件，不用去改仿真器的源码。（目录和文件名还沿用项目的旧名字 `wallerobot`。）
 
-- **LeRobotNeck：** [展示网站](https://lauyihong.github.io/lerobotneck/)：单独展示 6 自由度脖子，有实时演示、脖子模拟器，
+- **展示网站：** [LeRobotNeck 网站](https://lauyihong.github.io/lerobotneck/)：单独展示 6 自由度脖子，有实时演示、脖子模拟器，
   以及一张爆炸图，讲一条 SO101 机械臂加一个新打印的连杆（再用上 XLeRobot 的软指夹爪固定爪）怎样变成这个脖子。
 - **在线试玩：** [网页模拟器](https://lauyihong.github.io/lerobotneck/sim/)。MuJoCo 直接在浏览器里运行，不用安装任何东西。
 - **文档：** [https://lauyihong.github.io/lerobotneck/docs/zh/](https://lauyihong.github.io/lerobotneck/docs/zh/)，有中文和英文两种。
@@ -23,7 +23,7 @@ URDF、MuJoCo 模型和网页模拟器都从同一个 YAML 文件生成。想改
 | 软件 | LeRobot 机器人插件 `--robot.type=xlerobot_static` |
 
 ## 和 XLeRobot 的区别
-[XLeRobot](https://github.com/Vector-Wangel/XLeRobot) 是一台移动式双臂机器人。wallerobot 保留了它的机身、立柱和 SO101 机械臂，改了三处：
+[XLeRobot](https://github.com/Vector-Wangel/XLeRobot) 是一台移动式双臂机器人。LeRobotNeck 保留了它的机身、立柱和 SO101 机械臂，改了三处：
 - **去掉移动底盘**，机身直接放在桌上。
 - **用 6 自由度脖子代替原来 2 自由度的头**。脖子是改造过的 SO101：J3 和 J4 之间换成一个新零件，让 J4 变成左右侧摆。
 - **两条臂朝前安装**，和主相机朝向一致。

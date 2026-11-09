@@ -7,7 +7,7 @@
   "en": "Lean forward with J2/J3 and look down at the desk in front of the tower.",
   "zh": "用 J2/J3 前倾，低头看竖塔前面的桌面。"
  },
- "from": "current",
+ "from": "home",
  "speed_dps": 35,
  "dwell_s": 0.9,
  "waypoints": [

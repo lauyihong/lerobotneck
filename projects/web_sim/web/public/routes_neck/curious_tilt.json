@@ -7,7 +7,7 @@
   "en": "Side tilt with J4, the motion the new J3-J4 link adds, plus a J5 roll.",
   "zh": "用 J4 侧摆（新 J3–J4 连杆带来的动作），再加上 J5 滚转。"
  },
- "from": "current",
+ "from": "home",
  "speed_dps": 35,
  "dwell_s": 1.0,
  "waypoints": [

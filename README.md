@@ -1,13 +1,13 @@
-# wallerobot
+# LeRobotNeck
 
 **English** · [中文](README.zh-CN.md)
 
-wallerobot is an open, **configurable** robot description for a stationary XLeRobot variant: two SO101 arms and a
+LeRobotNeck is an open, **configurable** robot description for a stationary XLeRobot variant: two SO101 arms and a
 6-DoF neck that carries an Intel RealSense D435i. It has **no mobile base**. One YAML file generates the URDF, the
 MuJoCo model and a browser simulator from the same numbers. You change the robot by editing that file instead of
-patching a simulator.
+patching a simulator. (Folders and files still use the project's earlier name, `wallerobot`.)
 
-- **LeRobotNeck:** [showcase website](https://lauyihong.github.io/lerobotneck/): the 6-DoF neck on its own, with
+- **Showcase:** [LeRobotNeck website](https://lauyihong.github.io/lerobotneck/): the 6-DoF neck on its own, with
   live demos, a neck simulator, and an exploded view of how one SO101 arm plus one new printed link (and XLeRobot's soft-gripper jaw) becomes the neck.
 - **Try it:** [browser simulator](https://lauyihong.github.io/lerobotneck/sim/). It runs MuJoCo in the page, with
   nothing to install.
@@ -22,7 +22,7 @@ patching a simulator.
 | Software | LeRobot robot plugin `--robot.type=xlerobot_static` |
 
 ## How it differs from XLeRobot
-[XLeRobot](https://github.com/Vector-Wangel/XLeRobot) is a mobile dual-arm robot. wallerobot keeps its body, tower
+[XLeRobot](https://github.com/Vector-Wangel/XLeRobot) is a mobile dual-arm robot. LeRobotNeck keeps its body, tower
 and SO101 arms, and changes three things:
 - **No mobile base.** The body stands on a desk.
 - **6-DoF neck instead of the 2-DoF head.** The neck is a modified SO101 with a new J3→J4 link that turns J4 into a

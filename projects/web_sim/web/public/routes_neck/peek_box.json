@@ -7,7 +7,7 @@
   "en": "Active perception: from where it stands the box walls hide what is inside, so the neck leans over the box and looks at each thing in it.",
   "zh": "主动感知：站在原地只能看到盒子的墙，于是脖子探身到盒子上方，逐个看清里面的东西。"
  },
- "from": "current",
+ "from": "home",
  "speed_dps": 35,
  "dwell_s": 1.0,
  "camera_inset": "big",

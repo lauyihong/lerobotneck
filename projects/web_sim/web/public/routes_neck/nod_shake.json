@@ -7,7 +7,7 @@
   "en": "A quick nod (J6) and a head shake (J1).",
   "zh": "快速点头（J6），再摇头（J1）。"
  },
- "from": "current",
+ "from": "home",
  "speed_dps": 90,
  "dwell_s": 0,
  "waypoints": [

@@ -7,7 +7,7 @@
   "en": "Active perception: the neck moves the D435i around the block to see its sides and top, and finds the sticker on the side it could not see.",
   "zh": "主动感知：脖子带着 D435i 绕方块转，从侧面和上面看它，找到原来看不到的那一面上的贴纸。"
  },
- "from": "current",
+ "from": "home",
  "speed_dps": 35,
  "dwell_s": 1.0,
  "camera_inset": "big",
