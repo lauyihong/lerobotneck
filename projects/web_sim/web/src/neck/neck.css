@@ -128,6 +128,7 @@ h1, h2, h3 { margin: 0; line-height: 1.15; }
 .lbl.new span { background: var(--accent); color: #fff; } .lbl.new small { color: rgba(255, 255, 255, 0.85); }
 .lbl.out span { background: #ffe9e9; color: #a1191d; } .lbl.out i { background: #e5484d; }
 .lbl.xlerobot i { background: #56657c; }
+.lbl.swap span { background: #56657c; color: #fff; } .lbl.swap small { color: rgba(255, 255, 255, 0.85); }
 .lbl.j3 span { background: var(--blue); color: #fff; } .lbl.j4 span { background: var(--accent); color: #fff; }
 
 /* ---------- small screens: panels become bottom sheets */

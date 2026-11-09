@@ -10,7 +10,7 @@ There are three ways to simulate wallerobot, all built from the same generated m
 
 ```{tip}
 The neck alone has its own showcase website, **LeRobotNeck** ({site}`website <./>`): the {site}`neck simulator <play/>` is a neck-only simulator with demos you can
-pause and adjust, and the {site}`exploded view <neck/>` shows how a standard SO101 arm plus two new printed parts becomes
+pause and adjust, and the {site}`exploded view <neck/>` shows how a standard SO101 arm plus one new printed link and XLeRobot's soft-gripper jaw becomes
 the neck. Its model is the `hardware/variants/lerobotneck.yaml` variant (tower + neck, no body, no arms).
 ```
 

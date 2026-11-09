@@ -8,7 +8,7 @@ MuJoCo model and a browser simulator from the same numbers. You change the robot
 patching a simulator.
 
 - **LeRobotNeck:** [showcase website](https://lauyihong.github.io/lerobotneck/): the 6-DoF neck on its own, with
-  live demos, a neck simulator, and an exploded view of how one SO101 arm plus two new prints becomes the neck.
+  live demos, a neck simulator, and an exploded view of how one SO101 arm plus one new printed link (and XLeRobot's soft-gripper jaw) becomes the neck.
 - **Try it:** [browser simulator](https://lauyihong.github.io/lerobotneck/sim/). It runs MuJoCo in the page, with
   nothing to install.
 - **Docs:** [https://lauyihong.github.io/lerobotneck/docs/](https://lauyihong.github.io/lerobotneck/docs/), in English and 中文.

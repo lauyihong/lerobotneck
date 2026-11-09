@@ -1,5 +1,6 @@
 // Page 3: exploded view. A standard SO101 arm turns into LeRobotNeck in 7 steps: stock arm -> apart -> mark the two
-// parts that change -> swap in the new prints -> J4 axis turned 90° -> add the camera -> assemble.
+// parts that change -> swap in the new J3-J4 link (our design) and XLeRobot's soft-gripper jaw -> J4 axis turned 90°
+// -> add the camera -> assemble.
 //
 // The MuJoCo model holds both chains at the same base: the neck (neck_*) and a hidden stock SO101 (stock_*), whose
 // J1-J3 coincide with the neck's. Every frame, after View.sync() has copied the assembled poses, postSync() moves each
@@ -21,7 +22,9 @@ const PAIRS = [
   ['neck_cam_tilt_housing/Fixed_Jaw_Motor', 'stock_fixed_jaw/Fixed_Jaw_Motor'],
 ];
 const OLD = ['stock_lower_arm/Lower_Arm', 'stock_fixed_jaw/Fixed_Jaw', 'stock_moving_jaw/Moving_Jaw'];
+// replacements: the J3-J4 link is the one new design (orange); the J6 housing is XLeRobot's soft-gripper fixed jaw
 const NEW = ['neck_link34/wallerobot_new_wrist_dof_0_1', 'neck_cam_tilt_housing/cam_tilt_housing_softfin'];
+const FROM_XLE = 'neck_cam_tilt_housing/cam_tilt_housing_softfin';
 const CAM = ['neck_cam_holder/tophead5', 'neck_cam_holder/tophead6'];
 
 const COLOR = { print: 0xecebe6, servo: 0x1d1e21, fresh: 0xff6a13, xle: 0x56657c, cam: 0x8d9096, warn: 0xe5484d };
@@ -47,14 +50,14 @@ const STEPS = [
       ['stock_moving_jaw/Moving_Jaw', 'part.Moving_Jaw', 'out']] },
   { e: 1, w: 1, h: 0, mj: 0, c: 0, ax: 0, anim: 0,
     labels: [['neck_link34/wallerobot_new_wrist_dof_0_1', 'part.wallerobot_new_wrist_dof_0_1', 'new'],
-      ['neck_cam_tilt_housing/cam_tilt_housing_softfin', 'part.cam_tilt_housing_softfin', 'new']] },
+      ['neck_cam_tilt_housing/cam_tilt_housing_softfin', 'part.cam_tilt_housing_softfin', 'swap']] },
   { e: 0.45, w: 1, h: 0, mj: 0, c: 0, ax: 1, anim: 1, labels: [] },
   { e: 1, w: 1, h: 0, mj: 0, c: 1, ax: 0, anim: 0,
     labels: [['neck_cam_holder/tophead5', 'part.tophead5', 'xlerobot'], ['neck_cam_holder/tophead6', 'part.tophead6', 'xlerobot'],
       ['world/base_tower', 'part.base_tower', 'xlerobot']] },
   { e: 0, w: 1, h: 0, mj: 0, c: 1, ax: 0, anim: 2, labels: [] },
 ];
-const TAG = { so101: 'tag.so101', out: 'tag.out', new: 'tag.new', xlerobot: 'tag.xlerobot' };
+const TAG = { so101: 'tag.so101', out: 'tag.out', new: 'tag.new', xlerobot: 'tag.xlerobot', swap: 'tag.xlerobot' };
 
 export function neckPage(ctx) {
   const { sim, view, el } = ctx;
@@ -117,6 +120,7 @@ export function neckPage(ctx) {
   const paint = (mesh, hex, k) => mesh.material.color.copy(mesh.userData.baseColor).lerp(new THREE.Color(hex).convertSRGBToLinear(), k);
   const roleColor = (key) => {
     const mn = key.split('/')[1];
+    if (key === FROM_XLE) return COLOR.xle;
     if (NEW.includes(key)) return COLOR.fresh;
     if (mn === 'tophead6') return COLOR.cam;
     if (key.startsWith('world/') && mn !== 'topbase2') return COLOR.xle;
@@ -156,7 +160,7 @@ export function neckPage(ctx) {
       const n = by[key]; if (!n) continue;
       const fly = new THREE.Vector3(0, -0.32 * (1 - w), 0.06 * (1 - w));
       n.matrix.copy(placed(n, ofs(key, n).add(fly))); n.matrixWorldNeedsUpdate = true;
-      setOpacity(n, Math.min(1, Math.max(0, 1.6 * w - 0.6))); paint(n, COLOR.fresh, Math.max(S.p, 0.6));
+      setOpacity(n, Math.min(1, Math.max(0, 1.6 * w - 0.6))); paint(n, roleColor(key), Math.max(S.p, 0.6));
     }
     for (const key of CAM) {
       const n = by[key]; if (!n) continue;

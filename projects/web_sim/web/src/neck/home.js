@@ -32,7 +32,7 @@ export function homePage(ctx) {
         el('p', { class: 'lead' }, t('home.lead')),
         el('ul', { class: 'stats' },
           el('li', {}, el('b', {}, '6'), t('home.stat.dof')),
-          el('li', {}, el('b', {}, '2'), t('home.stat.parts')),
+          el('li', {}, el('b', {}, '1'), t('home.stat.parts')),
           el('li', {}, el('b', {}, 'D435i'), t('home.stat.cam'))),
         el('div', { class: 'cta' },
           el('a', { class: 'btn primary', href: ctx.href('play'), onclick: (e) => { e.preventDefault(); ctx.go('play'); } }, t('home.cta.play')),

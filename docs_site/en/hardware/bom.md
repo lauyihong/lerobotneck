@@ -18,7 +18,7 @@ and apply these changes.
 | file | what it is |
 |---|---|
 | `hardware/neck_v0_1/wallerobot_new_wrist_dof_0_1.stl` | **new link between J3 and J4.** It turns J4 into a side swing. |
-| `hardware/neck_v0_1/cam_tilt_housing_softfin.stl` | J6 motor housing: the XLeRobot soft-finger fixed jaw with the finger removed |
+| `hardware/neck_v0_1/cam_tilt_housing_softfin.stl` | J6 motor housing. Not a new design: it is XLeRobot's soft-gripper fixed jaw (the holder of its TPU fin-ray finger, `SO101_soft_fin.stl` in the XLeRobot repo), used without the finger. On an SO101 that already has this swappable gripper head, keep it. |
 | SO101 parts | base, rotation pitch, upper arm and wrist pitch/roll: print them as for an SO101 follower arm |
 | XLeRobot head-tilt holder | holds the D435i on J6; mounted mirrored compared with the old head |
 

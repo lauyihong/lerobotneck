@@ -13,7 +13,7 @@ The docs are served next to them at `/docs/` (see `.github/workflows/pages.yml`)
 ## LeRobotNeck showcase
 - One page app on one shared canvas: home (looping demo, click the neck to explode it), `play/` (demo cards; pause,
   move the joints, resume: the route is re-planned from your pose), `neck/` (7 steps: stock SO101 -> apart -> the two
-  parts that change -> new prints -> J4 turned 90° -> camera -> assembled; `neck/#step-N` opens a step).
+  parts that change -> the new J3-J4 link + XLeRobot's soft-gripper jaw -> J4 turned 90° -> camera -> assembled; `neck/#step-N` opens a step).
 - Model: `web/public/model_neck/`, exported by `scripts/export_assets.py --neck` from the
   `hardware/variants/lerobotneck.yaml` variant (`build_all.py` does it), plus a hidden copy of a stock SO101 arm
   (`stock_*` bodies) for the exploded view. Kinematic only (no contacts).

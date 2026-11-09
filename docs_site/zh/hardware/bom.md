@@ -17,7 +17,7 @@
 | 文件 | 说明 |
 |---|---|
 | `hardware/neck_v0_1/wallerobot_new_wrist_dof_0_1.stl` | **J3 和 J4 之间的新零件**，让 J4 变成侧摆 |
-| `hardware/neck_v0_1/cam_tilt_housing_softfin.stl` | J6 电机外壳，就是 XLeRobot 软指夹爪的固定爪去掉手指 |
+| `hardware/neck_v0_1/cam_tilt_housing_softfin.stl` | J6 电机外壳。不是新设计：它就是 XLeRobot 软指夹爪的固定爪（TPU 鳍条手指的支架，XLeRobot 仓库里的 `SO101_soft_fin.stl`），不装手指。如果你的 SO101 已经装了这种可替换夹爪头，这个件不用换。 |
 | SO101 零件 | 底座、肩（rotation pitch）、上臂、腕（wrist pitch/roll），按 SO101 从动臂的方式打印 |
 | XLeRobot 头部俯仰支架 | 把 D435i 固定在 J6 上；和原来的头相比是镜像安装的 |
 

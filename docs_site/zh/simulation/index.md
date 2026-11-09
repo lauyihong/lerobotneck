@@ -10,7 +10,7 @@
 
 ```{tip}
 脖子还有一个单独的展示网站 **LeRobotNeck**（{site}`网站 <./>`）：{site}`脖子模拟器 <play/>` 只有脖子，演示可以暂停并调整姿态；{site}`爆炸图 <neck/>`
-讲一条标准 SO101 机械臂加两个新打印件怎样变成这个脖子。它的模型是 `hardware/variants/lerobotneck.yaml`
+讲一条标准 SO101 机械臂加一个新连杆和 XLeRobot 的软指夹爪固定爪，怎样变成这个脖子。它的模型是 `hardware/variants/lerobotneck.yaml`
 这个变体（竖塔 + 脖子，没有机身和手臂）。
 ```
 
