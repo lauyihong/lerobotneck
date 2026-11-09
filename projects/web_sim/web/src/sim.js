@@ -59,6 +59,13 @@ export class Sim {
     this.target = { ...this.home };     // where the user wants each joint
     this.speed = 60 * DEG;              // rad/s slew limit for keyboard / slider moves
     this.gravComp = true;
+    // kinematic = no physics: step() slews the commands and writes them straight into qpos (exact poses, no sag)
+    this.kinematic = false;
+    // joints without an actuator that pages pose directly (LeRobotNeck: the hidden stock SO101, poses.json stock_joints)
+    this.aux = Object.fromEntries((poses.stock_joints ?? []).map((j) => {
+      const id = mj.mj_name2id(m, mj.mjtObj.mjOBJ_JOINT.value, j.name);
+      return [j.name, { ...j, id, qadr: m.jnt_qposadr[id] }];
+    }));
     this.nv = m.nv;
     this.jacp = mj.DoubleBuffer.FromArray(new Array(3 * m.nv).fill(0));
     this.jacr = mj.DoubleBuffer.FromArray(new Array(3 * m.nv).fill(0));
@@ -91,6 +98,7 @@ export class Sim {
       this.cmd[j.name] += Math.max(-max, Math.min(max, e));
     }
     this.applyCtrl();
+    if (this.kinematic) { this.writePose(); return; }
     const n = Math.max(1, Math.round(dt / this.m.opt.timestep));
     const bias = this.d.qfrc_bias, app = this.d.qfrc_applied;
     for (let i = 0; i < n; i++) {
@@ -100,6 +108,23 @@ export class Sim {
       this.mj.mj_step(this.m, this.d);
     }
   }
+
+  // kinematic pose update: qpos = commands (+ aux joints), then forward kinematics only
+  writePose() {
+    const { mj, m, d } = this;
+    for (const j of this.joints) d.qpos[j.qadr] = this.cmd[j.name];
+    mj.mj_kinematics(m, d);
+    mj.mj_camlight(m, d);   // camera poses (the D435i inset) are not part of mj_kinematics
+  }
+  // pose without slewing: commands, targets and qpos jump to `pose` (partial dicts allowed)
+  setPose(pose) {
+    for (const [n, v] of Object.entries(pose)) {
+      if (n in this.byName) this.cmd[n] = this.target[n] = this.clamp(n, v);
+      else if (n in this.aux) this.d.qpos[this.aux[n].qadr] = Math.min(this.aux[n].upper, Math.max(this.aux[n].lower, v));
+    }
+    this.writePose();
+  }
+  setAux(q) { for (const [n, v] of Object.entries(q)) if (n in this.aux) this.d.qpos[this.aux[n].qadr] = v; }
 
   q(name) { return this.d.qpos[this.byName[name].qadr]; }
   qAll() { return Object.fromEntries(this.joints.map((j) => [j.name, this.d.qpos[j.qadr]])); }

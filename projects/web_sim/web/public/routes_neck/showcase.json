@@ -1,0 +1,170 @@
+{
+ "name": {
+  "en": "Homepage loop",
+  "zh": "首页循环"
+ },
+ "description": {
+  "en": "Wake up, look around, tilt, peek, rest.",
+  "zh": "起身、环顾、歪头、探身、休息。"
+ },
+ "from": "home",
+ "speed_dps": 40,
+ "dwell_s": 0.6,
+ "waypoints": [
+  {
+   "label": {
+    "en": "Lift the head",
+    "zh": "抬起头"
+   },
+   "q": {
+    "neck_j2": 150,
+    "neck_j3": 178,
+    "neck_j6": -5
+   }
+  },
+  {
+   "label": {
+    "en": "Stand up",
+    "zh": "站起来"
+   },
+   "q": {
+    "neck_j2": 100,
+    "neck_j3": 160,
+    "neck_j6": -15
+   }
+  },
+  {
+   "label": {
+    "en": "Stretch",
+    "zh": "伸个懒腰"
+   },
+   "q": {
+    "neck_j2": 80,
+    "neck_j3": 175,
+    "neck_j6": -50
+   },
+   "dwell_s": 0.8
+  },
+  {
+   "label": {
+    "en": "Ready",
+    "zh": "准备姿势"
+   },
+   "q": {
+    "neck_j1": 0,
+    "neck_j2": 90,
+    "neck_j3": 150,
+    "neck_j4": 0,
+    "neck_j5": 0,
+    "neck_j6": -25
+   },
+   "dwell_s": 0.6
+  },
+  {
+   "label": {
+    "en": "Look left",
+    "zh": "看左边"
+   },
+   "q": {
+    "neck_j1": -55,
+    "neck_j6": -20
+   }
+  },
+  {
+   "label": {
+    "en": "Look up",
+    "zh": "抬头"
+   },
+   "q": {
+    "neck_j6": -55
+   }
+  },
+  {
+   "label": {
+    "en": "Look right",
+    "zh": "看右边"
+   },
+   "q": {
+    "neck_j1": 50,
+    "neck_j6": -30
+   }
+  },
+  {
+   "label": {
+    "en": "Look down",
+    "zh": "低头"
+   },
+   "q": {
+    "neck_j6": 10
+   }
+  },
+  {
+   "label": {
+    "en": "Back to centre",
+    "zh": "回到正前方"
+   },
+   "q": {
+    "neck_j1": 0,
+    "neck_j6": -25
+   }
+  },
+  {
+   "label": {
+    "en": "Tilt left",
+    "zh": "向左歪头"
+   },
+   "q": {
+    "neck_j4": 32,
+    "neck_j5": -12,
+    "neck_j6": -15
+   }
+  },
+  {
+   "label": {
+    "en": "Tilt right",
+    "zh": "向右歪头"
+   },
+   "q": {
+    "neck_j4": -32,
+    "neck_j5": 12
+   }
+  },
+  {
+   "label": {
+    "en": "Upright",
+    "zh": "回正"
+   },
+   "q": {
+    "neck_j4": 0,
+    "neck_j5": 0,
+    "neck_j6": -25
+   }
+  },
+  {
+   "label": {
+    "en": "Lean forward",
+    "zh": "向前探身"
+   },
+   "q": {
+    "neck_j2": 55,
+    "neck_j3": 115,
+    "neck_j6": 15
+   }
+  },
+  {
+   "label": {
+    "en": "Back to rest",
+    "zh": "回到休息位"
+   },
+   "q": {
+    "neck_j1": 6.8,
+    "neck_j2": 186.9,
+    "neck_j3": 180.7,
+    "neck_j4": 0.2,
+    "neck_j5": 0,
+    "neck_j6": 10.7
+   },
+   "dwell_s": 2.0
+  }
+ ]
+}

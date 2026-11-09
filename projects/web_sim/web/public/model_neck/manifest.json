@@ -1,0 +1,25 @@
+{
+"entry": "scene.xml",
+"files": [
+"scene.xml",
+"lerobotneck.xml",
+"meshes/Fixed_Jaw.stl",
+"meshes/Fixed_Jaw_Motor.stl",
+"meshes/Lower_Arm.stl",
+"meshes/Lower_Arm_Motor.stl",
+"meshes/Moving_Jaw.stl",
+"meshes/Rotation_Pitch.stl",
+"meshes/Rotation_Pitch_Motor.stl",
+"meshes/Upper_Arm.stl",
+"meshes/Upper_Arm_Motor.stl",
+"meshes/Wrist_Pitch_Roll.stl",
+"meshes/Wrist_Pitch_Roll_Motor.stl",
+"meshes/base_j1_housing.stl",
+"meshes/base_tower.stl",
+"meshes/cam_tilt_housing_softfin.stl",
+"meshes/topbase2.stl",
+"meshes/tophead5.stl",
+"meshes/tophead6.stl",
+"meshes/wallerobot_new_wrist_dof_0_1.stl"
+]
+}

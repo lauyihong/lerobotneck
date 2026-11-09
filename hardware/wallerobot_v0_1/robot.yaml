@@ -20,6 +20,11 @@ calibration:                                        # per-robot motor calibratio
 
 joint_defaults: {effort: 3.35, velocity: 3}         # URDF <limit> (STS3215 12 V stall torque N*m, rad/s)
 
+# ---------------------------------------------------------------------------------------------------------- body
+# Which XLeRobot body parts are drawn (meshes in hardware/neck_v0_1/, body frame). topbase2 = the J1 motor.
+body:
+  visuals: [base_body_lower, base_tower, base_j1_housing, topbase2]
+
 # ---------------------------------------------------------------------------------------------------------- arms
 # Two stock SO101 arms. mount.xyz = centre of the SO101 Base footprint circle on the body pad (pad top z), mount.yaw_deg =
 # rotation about body z; -90 makes the arm face robot forward (-x) at shoulder_pan = 0. Left and right are independent.

@@ -6,15 +6,17 @@ const GEOM = { PLANE: 0, SPHERE: 2, CAPSULE: 3, CYLINDER: 5, BOX: 6, MESH: 7 };
 const VISUAL_GROUPS = new Set([0, 1, 2]);   // 3 = collision hulls (hidden), 4 = sites
 
 export class View {
-  constructor(sim, canvas) {
+  // opts (all optional): background / fog colour, camera position + orbit target (three.js world, y up), pip (inset on)
+  constructor(sim, canvas, opts = {}) {
     this.sim = sim;
+    const bg = opts.background ?? 0xdfe3ea;
     const r = this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
     r.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     r.shadowMap.enabled = true; r.shadowMap.type = THREE.PCFShadowMap;
     r.outputColorSpace = THREE.SRGBColorSpace;
     const scene = this.scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xdfe3ea);
-    scene.fog = new THREE.Fog(0xdfe3ea, 2.5, 7.5);
+    scene.background = new THREE.Color(bg);
+    scene.fog = new THREE.Fog(opts.fog ?? bg, 2.5, 7.5);
 
     // MuJoCo is z-up; everything robot-related lives in `world`, rotated so +z points up on screen
     this.world = new THREE.Group(); this.world.rotation.x = -Math.PI / 2; scene.add(this.world);
@@ -28,9 +30,12 @@ export class View {
     scene.add(sun);
 
     this.camera = new THREE.PerspectiveCamera(40, 1, 0.01, 30);
-    this.camera.position.set(-1.25, 0.65, 0.45);   // in front of the robot (it faces world −x), a little to its left
+    this.camera.position.set(...(opts.camPos ?? [-1.25, 0.65, 0.45]));   // default: in front of the robot (it faces world −x)
     this.orbit = new OrbitControls(this.camera, canvas);
-    this.orbit.target.set(-0.12, 0.22, 0); this.orbit.enableDamping = true; this.orbit.update();
+    this.orbit.target.set(...(opts.target ?? [-0.12, 0.22, 0])); this.orbit.enableDamping = true; this.orbit.update();
+    this.sun = sun;
+    this.postSync = null;
+    this.shift = 0; this.shiftTarget = 0; this.shiftY = 0; this.shiftYTarget = 0;   // optional hook, called after the MuJoCo poses were copied (e.g. exploded-view offsets)
 
     this.geoms = []; this.pickables = [];
     this.buildGeoms();
@@ -41,7 +46,7 @@ export class View {
     this.neckCam = new THREE.PerspectiveCamera(m.cam_fovy[this.camId], 4 / 3, 0.01, 10);
     this.neckCam.matrixAutoUpdate = false;
     this.world.add(this.neckCam);
-    this.pip = { on: true, w: 240 };
+    this.pip = { on: opts.pip ?? true, w: 240 };
 
     this.markers = {};
   }
@@ -72,7 +77,10 @@ export class View {
       const mesh = new THREE.Mesh(geo, mat);
       mesh.castShadow = true; mesh.receiveShadow = true;
       mesh.matrixAutoUpdate = false;
-      mesh.userData = { geom: g, body: m.geom_bodyid[g], baseColor: mat.color.clone() };
+      const body = m.geom_bodyid[g];
+      mesh.userData = { geom: g, body, baseColor: mat.color.clone(), baseOpacity: rgba[3],
+        bodyName: this.sim.mj.mj_id2name(m, this.sim.mj.mjtObj.mjOBJ_BODY.value, body),
+        meshName: type === GEOM.MESH ? this.sim.mj.mj_id2name(m, this.sim.mj.mjtObj.mjOBJ_MESH.value, m.geom_dataid[g]) : null };
       this.world.add(mesh);
       this.geoms.push(mesh); this.pickables.push(mesh);
     }
@@ -91,7 +99,7 @@ export class View {
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(2 * s, 2 * s), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.9 }));
     floor.position.set(m.geom_pos[3 * g], m.geom_pos[3 * g + 1], m.geom_pos[3 * g + 2]);
     floor.receiveShadow = true;
-    this.world.add(floor);
+    this.world.add(floor); this.floor = floor;
   }
 
   marker(name, color, radius = 0.012) {
@@ -128,6 +136,7 @@ export class View {
       cm[9 * c + 3], cm[9 * c + 4], cm[9 * c + 5], cp[3 * c + 1],
       cm[9 * c + 6], cm[9 * c + 7], cm[9 * c + 8], cp[3 * c + 2], 0, 0, 0, 1);
     this.neckCam.matrixWorldNeedsUpdate = true;
+    this.postSync?.();
   }
 
   resize() {
@@ -135,8 +144,14 @@ export class View {
     if (cv.width !== Math.floor(w * this.renderer.getPixelRatio()) || cv.height !== Math.floor(h * this.renderer.getPixelRatio())) {
       this.renderer.setSize(w, h, false);
     }
-    this.camera.aspect = w / h; this.camera.updateProjectionMatrix();
-    this.pip.w = Math.round(Math.min(280, Math.max(110, w * 0.24)));
+    this.camera.aspect = w / h;
+    // shift = move the picture sideways by a fraction of the width (+ = right), eased towards shiftTarget
+    this.shift += ((this.shiftTarget ?? 0) - this.shift) * 0.08;
+    this.shiftY += ((this.shiftYTarget ?? 0) - this.shiftY) * 0.08;   // + = move the picture up
+    if (Math.abs(this.shift) > 1e-4 || Math.abs(this.shiftY) > 1e-4) this.camera.setViewOffset(w, h, -this.shift * w, this.shiftY * h, w, h);
+    else this.camera.clearViewOffset();
+    this.camera.updateProjectionMatrix();
+    this.pip.w = Math.round(Math.min(280, Math.max(110, w * 0.24)) * (this.pip.scale ?? 1));
   }
 
   draw(extraHelpers = []) {
@@ -145,7 +160,7 @@ export class View {
     r.setScissorTest(false); r.setViewport(0, 0, w, h); r.render(this.scene, this.camera);
     if (this.pip.on) {
       // neck camera view, bottom-left corner; helpers (gizmo, markers) are hidden in it
-      const pw = this.pip.w, ph = Math.round(pw * 3 / 4), x = 10, y = 10;
+      const { left: x, bottom: y, width: pw, height: ph } = this.pipRect();
       const hidden = [...extraHelpers, ...Object.values(this.markers)].filter((o) => o.visible);
       hidden.forEach((o) => { o.visible = false; });
       r.setScissorTest(true); r.setScissor(x, y, pw, ph); r.setViewport(x, y, pw, ph);
@@ -155,7 +170,12 @@ export class View {
     }
   }
 
-  pipRect() { const pw = this.pip.w, ph = Math.round(pw * 3 / 4); return { left: 10, bottom: 10, width: pw, height: ph }; }
+  // inset rectangle in CSS px from the bottom-left corner; pip.x / pip.y move it (default 10, 10), pip.top pins it to the top
+  pipRect() {
+    const pw = this.pip.w, ph = Math.round(pw * 3 / 4), h = this.renderer.domElement.clientHeight;
+    const x = this.pip.x ?? 10, y = this.pip.top != null ? h - ph - this.pip.top : (this.pip.y ?? 10);
+    return { left: x, bottom: y, width: pw, height: ph };
+  }
 }
 
 function meshGeometry(m, id) {

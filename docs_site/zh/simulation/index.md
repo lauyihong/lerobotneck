@@ -8,6 +8,12 @@
 | **MuJoCo 查看器** | `projects/sim_mirror/scripts/view.py` | `requirements-model.txt` |
 | **虚实镜像** | `projects/sim_mirror/scripts/mirror.py` | 真机（只读）+ LeRobot |
 
+```{tip}
+脖子还有一个单独的展示网站 **LeRobotNeck**（{site}`网站 <./>`）：{site}`脖子模拟器 <play/>` 只有脖子，演示可以暂停并调整姿态；{site}`爆炸图 <neck/>`
+讲一条标准 SO101 机械臂加两个新打印件怎样变成这个脖子。它的模型是 `hardware/variants/lerobotneck.yaml`
+这个变体（竖塔 + 脖子，没有机身和手臂）。
+```
+
 ## 网页模拟器
 
 MuJoCo 3.16 以 WebAssembly 的形式在网页里运行，画面由 three.js 绘制。它是纯仿真，不会向外发送任何数据，也从不连接硬件。

@@ -1,0 +1,77 @@
+{
+ "name": {
+  "en": "Look around",
+  "zh": "环顾四周"
+ },
+ "description": {
+  "en": "Scan the room with J1 and tilt the D435i with J6. Watch the camera inset.",
+  "zh": "用 J1 扫视、J6 俯仰 D435i，看看相机小窗里的画面。"
+ },
+ "from": "current",
+ "speed_dps": 45,
+ "dwell_s": 0.7,
+ "waypoints": [
+  {
+   "label": {
+    "en": "Ready",
+    "zh": "准备姿势"
+   },
+   "q": {
+    "neck_j1": 0,
+    "neck_j2": 90,
+    "neck_j3": 150,
+    "neck_j4": 0,
+    "neck_j5": 0,
+    "neck_j6": -25
+   }
+  },
+  {
+   "label": {
+    "en": "Look left",
+    "zh": "看左边"
+   },
+   "q": {
+    "neck_j1": -55,
+    "neck_j6": -20
+   }
+  },
+  {
+   "label": {
+    "en": "Look up",
+    "zh": "抬头"
+   },
+   "q": {
+    "neck_j6": -55
+   }
+  },
+  {
+   "label": {
+    "en": "Look right",
+    "zh": "看右边"
+   },
+   "q": {
+    "neck_j1": 50,
+    "neck_j6": -30
+   }
+  },
+  {
+   "label": {
+    "en": "Look down",
+    "zh": "低头"
+   },
+   "q": {
+    "neck_j6": 10
+   }
+  },
+  {
+   "label": {
+    "en": "Back to centre",
+    "zh": "回到正前方"
+   },
+   "q": {
+    "neck_j1": 0,
+    "neck_j6": -25
+   }
+  }
+ ]
+}

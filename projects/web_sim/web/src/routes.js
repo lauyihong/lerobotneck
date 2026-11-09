@@ -26,7 +26,12 @@ export function planRoute(sim, route, start) {
 }
 
 export class RoutePlayer {
-  constructor(sim) { this.sim = sim; this.plan = null; this.t = 0; this.playing = false; this.loop = false; this.route = null; }
+  constructor(sim) {
+    this.sim = sim; this.plan = null; this.t = 0; this.playing = false; this.loop = false; this.route = null;
+    // UI strings (the LeRobotNeck pages pass translated ones); status = {kind: start|move|dwell|done, seg} for richer UIs
+    this.text = { toStart: '移动到起点', done: '完成', dwell: (l) => `${l}（停留）` };
+    this.status = null;
+  }
 
   load(route, { fromHome = route.from === 'home' } = {}) {
     this.route = route;
@@ -51,13 +56,13 @@ export class RoutePlayer {
     // wait until the robot has reached the route's start pose before the clock runs
     if (this.t === 0) {
       const far = Object.entries(this.start).some(([n, v]) => Math.abs(this.sim.cmd[n] - v) > 0.5 * DEG);
-      if (far) { this.sim.setTargets(this.start); return '移动到起点'; }
+      if (far) { this.sim.setTargets(this.start); this.status = { kind: 'start', seg: -1 }; return this.text.toStart; }
     }
     this.t += dt;
     if (this.t >= this.plan.T) {
       this.sim.setCommand(this.plan.end);
       if (this.loop) { this.t = 0; this.start = { ...this.plan.end }; this.plan = planRoute(this.sim, this.route, this.start); }
-      else { this.playing = false; return '完成'; }
+      else { this.playing = false; this.status = { kind: 'done', seg: this.plan.segs.length - 1 }; return this.text.done; }
     }
     let label = '';
     for (const s of this.plan.segs) {
@@ -67,10 +72,44 @@ export class RoutePlayer {
       const q = {};
       for (const n of Object.keys(s.to)) q[n] = s.from[n] + k * (s.to[n] - s.from[n]);
       this.sim.setCommand(q);
-      label = u < 1 ? s.label : `${s.label}（停留）`;
+      label = u < 1 ? s.label : this.text.dwell(s.label);
+      this.status = { kind: u < 1 ? 'move' : 'dwell', seg: s.i };
     }
     return label;
   }
+
+  // index of the waypoint the clock is at (moving to it, or dwelling on it)
+  segAt(t = this.t) {
+    if (!this.plan) return -1;
+    let k = 0;
+    for (const s of this.plan.segs) if (t >= s.t0) k = s.i;
+    return k;
+  }
+
+  // Continue the route from wherever the robot is now (the user may have changed joints while paused): replan from
+  // sim.target to the current waypoint (or the next one if we were dwelling on it) and everything after it.
+  replanFromCurrent() {
+    if (!this.plan || !this.route) return;
+    const k = this.segAt(); const s = this.plan.segs[k];
+    const next = this.t > s.t1 ? k + 1 : k;   // dwelling at k -> go on with k+1
+    this.seek(next, { from: { ...this.sim.target } });
+  }
+
+  // restart the route at waypoint `k` (moving there from `from`, default the current targets)
+  seek(k, { from = { ...this.sim.target } } = {}) {
+    if (!this.route) return;
+    const wps = this.route.waypoints;
+    if (k >= wps.length) { this.t = this.plan.T; this.status = { kind: 'done', seg: wps.length - 1 }; return; }
+    // carry the joints set by earlier waypoints (partial waypoints only list what changes)
+    const base = { ...from };
+    this.offset = k;
+    this.plan = planRoute(this.sim, { ...this.route, waypoints: wps.slice(k) }, base);
+    for (const sg of this.plan.segs) sg.i += k;
+    this.start = base; this.fromHome = false; this.t = 0;
+  }
+
+  // full route again from its first waypoint
+  restart() { if (this.route) this.load(this.route, { fromHome: this.route.from === 'home' }); }
 
   progress() { return this.plan ? Math.min(1, this.t / this.plan.T) : 0; }
 }

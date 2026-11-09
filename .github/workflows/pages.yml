@@ -32,11 +32,12 @@ jobs:
           cache: npm
           cache-dependency-path: projects/web_sim/web/package-lock.json
       - run: pip install -r docs_site/requirements.txt
-      - run: sphinx-build -b html docs_site/en _site
-      - run: sphinx-build -b html docs_site/zh _site/zh
-      - name: browser simulator -> /sim/
+      # site root = the projects/web_sim/web build: LeRobotNeck showcase at /, /play/, /neck/ + full simulator at /sim/
+      - name: website -> /
         working-directory: projects/web_sim/web
-        run: npm ci && npm run build && cp -r dist "$GITHUB_WORKSPACE/_site/sim"
+        run: npm ci && npm run build && cp -r dist "$GITHUB_WORKSPACE/_site"
+      - run: sphinx-build -b html docs_site/en _site/docs
+      - run: sphinx-build -b html docs_site/zh _site/docs/zh
       - run: touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:

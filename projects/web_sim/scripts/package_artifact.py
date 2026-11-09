@@ -1,11 +1,12 @@
-"""Turn the vite build (web/dist/) into a claude.ai Artifact page.
+"""Turn the vite build of the full wallerobot simulator (web/dist/sim/index.html) into a claude.ai Artifact page.
 
 The Artifact host wraps the published page in its own <!doctype><head><body> skeleton, so the page must be a fragment:
 <title>, inline <style>, the body markup and the module <script>. Everything else in dist/ (JS bundle, wasm, model,
 routes) is published next to it as supporting files at the same relative paths.
 
 Writes web/dist/artifact_page.html and web/dist/artifact_files.json (the `files` map for the Artifact publish call).
-Run after `npm run build`.
+Run after `npm run build`. The page has no data-root, so it loads model/ and routes/ next to itself (the site root).
+The LeRobotNeck showcase (dist/index.html, play/, neck/, model_neck/, routes_neck/, img/) is not part of the Artifact.
 """
 import base64
 import gzip
@@ -17,10 +18,10 @@ DIST = Path(__file__).resolve().parents[1] / "web" / "dist"
 TYPES = {".wasm": "application/wasm", ".stl": "model/stl", ".xml": "application/xml", ".json": "application/json",
          ".js": "text/javascript", ".css": "text/css"}
 
-html = (DIST / "index.html").read_text(encoding="utf-8")
+html = (DIST / "sim" / "index.html").read_text(encoding="utf-8")
 title = re.search(r"<title>.*?</title>", html, re.S).group(0)
-js = re.search(r'<script type="module"[^>]*src="\./(assets/[^"]+\.js)"', html).group(1)
-css = re.search(r'<link rel="stylesheet"[^>]*href="\./(assets/[^"]+\.css)"', html).group(1)
+js = re.search(r'<script type="module"[^>]*src="\.\./(assets/[^"]+\.js)"', html).group(1)
+css = re.search(r'<link rel="stylesheet"[^>]*href="\.\./(assets/[^"]+\.css)"', html).group(1)
 body = re.search(r"<body>(.*)</body>", html, re.S).group(1).strip()
 
 page = "\n".join([
@@ -50,7 +51,8 @@ files = {"model/manifest.json": {"from": "artifact/manifest.json", "contentType"
          "model/meshes.pack.txt": {"from": "artifact/meshes.pack.txt", "contentType": "text/plain"}}
 for p in sorted(DIST.rglob("*")):
     rel = p.relative_to(DIST).as_posix()
-    if (p.is_dir() or rel in ("index.html", "artifact_page.html", "artifact_files.json", "model/manifest.json")
+    if (p.is_dir() or rel.endswith("index.html") or rel in ("artifact_page.html", "artifact_files.json", "model/manifest.json")
+            or rel.startswith(("model_neck/", "routes_neck/", "img/", "assets/app-")) or p.suffix == ".png"
             or rel == css or rel.startswith("artifact/") or p.suffix == ".stl"):
         continue
     files[rel] = {"from": rel, "contentType": TYPES[p.suffix.lower()]}

@@ -1,0 +1,80 @@
+{
+ "name": {
+  "en": "Curious tilt",
+  "zh": "好奇地歪头"
+ },
+ "description": {
+  "en": "Side tilt with J4, the motion the new J3-J4 link adds, plus a J5 roll.",
+  "zh": "用 J4 侧摆（新 J3–J4 连杆带来的动作），再加上 J5 滚转。"
+ },
+ "from": "current",
+ "speed_dps": 35,
+ "dwell_s": 1.0,
+ "waypoints": [
+  {
+   "label": {
+    "en": "Ready",
+    "zh": "准备姿势"
+   },
+   "q": {
+    "neck_j1": 0,
+    "neck_j2": 90,
+    "neck_j3": 150,
+    "neck_j4": 0,
+    "neck_j5": 0,
+    "neck_j6": -25
+   },
+   "dwell_s": 0.4
+  },
+  {
+   "label": {
+    "en": "Tilt left",
+    "zh": "向左歪头"
+   },
+   "q": {
+    "neck_j4": 32,
+    "neck_j5": -12,
+    "neck_j6": -15
+   }
+  },
+  {
+   "label": {
+    "en": "Tilt right",
+    "zh": "向右歪头"
+   },
+   "q": {
+    "neck_j4": -32,
+    "neck_j5": 12
+   }
+  },
+  {
+   "label": {
+    "en": "Roll",
+    "zh": "滚转"
+   },
+   "q": {
+    "neck_j4": 0,
+    "neck_j5": -35
+   }
+  },
+  {
+   "label": {
+    "en": "Roll back",
+    "zh": "滚回来"
+   },
+   "q": {
+    "neck_j5": 30
+   }
+  },
+  {
+   "label": {
+    "en": "Upright",
+    "zh": "回正"
+   },
+   "q": {
+    "neck_j5": 0,
+    "neck_j6": -25
+   }
+  }
+ ]
+}

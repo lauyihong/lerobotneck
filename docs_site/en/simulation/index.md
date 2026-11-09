@@ -8,6 +8,12 @@ There are three ways to simulate wallerobot, all built from the same generated m
 | **MuJoCo viewer** | `projects/sim_mirror/scripts/view.py` | `requirements-model.txt` |
 | **sim-real mirror** | `projects/sim_mirror/scripts/mirror.py` | the real robot (read-only) + LeRobot |
 
+```{tip}
+The neck alone has its own showcase website, **LeRobotNeck** ({site}`website <./>`): the {site}`neck simulator <play/>` is a neck-only simulator with demos you can
+pause and adjust, and the {site}`exploded view <neck/>` shows how a standard SO101 arm plus two new printed parts becomes
+the neck. Its model is the `hardware/variants/lerobotneck.yaml` variant (tower + neck, no body, no arms).
+```
+
 ## Browser simulator
 
 MuJoCo 3.16 runs in the page as WebAssembly, and three.js draws it. Nothing is sent anywhere: it is a pure

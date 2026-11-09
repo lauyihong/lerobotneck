@@ -1,0 +1,10 @@
+# LeRobotNeck: the neck on its own XLeRobot tower, no body and no arms (the model of the showcase website).
+#     python hardware/build_all.py --config hardware/variants/lerobotneck.yaml --out build/lerobotneck
+# build_all.py (default run) also exports it to projects/web_sim/web/public/model_neck/ for the website.
+arms:
+  left: {enabled: false}
+  right: {enabled: false}
+body:
+  visuals: [base_tower, base_j1_housing, topbase2]
+sim:
+  desk_z: 0.1059                                    # bottom of base_tower.stl (z min 105.9 mm in the body frame)

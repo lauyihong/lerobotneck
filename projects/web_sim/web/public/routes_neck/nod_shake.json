@@ -1,0 +1,112 @@
+{
+ "name": {
+  "en": "Yes and no",
+  "zh": "点头和摇头"
+ },
+ "description": {
+  "en": "A quick nod (J6) and a head shake (J1).",
+  "zh": "快速点头（J6），再摇头（J1）。"
+ },
+ "from": "current",
+ "speed_dps": 90,
+ "dwell_s": 0,
+ "waypoints": [
+  {
+   "label": {
+    "en": "Ready",
+    "zh": "准备姿势"
+   },
+   "q": {
+    "neck_j1": 0,
+    "neck_j2": 90,
+    "neck_j3": 150,
+    "neck_j4": 0,
+    "neck_j5": 0,
+    "neck_j6": -25
+   },
+   "dwell_s": 0.5
+  },
+  {
+   "label": {
+    "en": "Nod",
+    "zh": "点头"
+   },
+   "q": {
+    "neck_j6": 5
+   },
+   "duration_s": 0.4
+  },
+  {
+   "label": {
+    "en": "Nod",
+    "zh": "点头"
+   },
+   "q": {
+    "neck_j6": -40
+   },
+   "duration_s": 0.45
+  },
+  {
+   "label": {
+    "en": "Nod",
+    "zh": "点头"
+   },
+   "q": {
+    "neck_j6": 5
+   },
+   "duration_s": 0.45
+  },
+  {
+   "label": {
+    "en": "Nod",
+    "zh": "点头"
+   },
+   "q": {
+    "neck_j6": -25
+   },
+   "duration_s": 0.4,
+   "dwell_s": 0.7
+  },
+  {
+   "label": {
+    "en": "Shake",
+    "zh": "摇头"
+   },
+   "q": {
+    "neck_j1": -25
+   },
+   "duration_s": 0.4
+  },
+  {
+   "label": {
+    "en": "Shake",
+    "zh": "摇头"
+   },
+   "q": {
+    "neck_j1": 25
+   },
+   "duration_s": 0.55
+  },
+  {
+   "label": {
+    "en": "Shake",
+    "zh": "摇头"
+   },
+   "q": {
+    "neck_j1": -20
+   },
+   "duration_s": 0.55
+  },
+  {
+   "label": {
+    "en": "Shake",
+    "zh": "摇头"
+   },
+   "q": {
+    "neck_j1": 0
+   },
+   "duration_s": 0.45,
+   "dwell_s": 0.6
+  }
+ ]
+}

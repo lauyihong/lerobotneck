@@ -1,0 +1,11 @@
+{
+ "demos": [
+  "wake_up",
+  "look_around",
+  "nod_shake",
+  "curious_tilt",
+  "peek_desk",
+  "robot_demo"
+ ],
+ "home": "showcase"
+}

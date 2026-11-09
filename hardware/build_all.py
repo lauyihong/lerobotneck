@@ -10,6 +10,8 @@ Steps (default config):
   3. MJCF                 projects/sim_mirror/models/wallerobot_static.xml + scene.xml
   4. joint table          hardware/wallerobot_v0_1/JOINTS.md (+ docs/robot_design.md section 4 if that doc exists)
   5. web model            projects/web_sim/web/public/model/ (needs both arms; skipped with --no-web)
+  6. LeRobotNeck web model hardware/variants/lerobotneck.yaml -> build/lerobotneck -> projects/web_sim/web/public/model_neck/
+                          (the showcase website; skipped with --no-web)
 
 A variant (--out) gets steps 2-3 only: <out>/urdf/wallerobot_static.urdf and <out>/mjcf/scene.xml. The joint table and
 the web export describe the reference robot and are not built for variants.
@@ -27,7 +29,8 @@ for p in ("hardware", "hardware/neck_v0_1", "hardware/wallerobot_v0_1", "project
 import robot_config  # noqa: E402
 
 GENERATED = ["hardware/neck_v0_1/urdf", "hardware/wallerobot_v0_1/urdf", "hardware/wallerobot_v0_1/JOINTS.md",
-             "projects/sim_mirror/models", "projects/web_sim/web/public/model"]
+             "projects/sim_mirror/models", "projects/web_sim/web/public/model",
+             "projects/web_sim/web/public/model_neck"]
 
 
 def run(script, *args):
@@ -68,6 +71,9 @@ def main():
             run("projects/web_sim/scripts/export_assets.py")
         else:
             print("\n== web export skipped (the web app needs both arms)")
+        if not a.config:
+            run("hardware/build_all.py", "--config", "hardware/variants/lerobotneck.yaml", "--out", "build/lerobotneck")
+            run("projects/web_sim/scripts/export_assets.py", "--neck", "build/lerobotneck/mjcf")
     if a.check:
         r = subprocess.run(["git", "status", "--porcelain", "--", *GENERATED], cwd=ROOT, capture_output=True, text=True)
         if r.stdout.strip():

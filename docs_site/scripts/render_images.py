@@ -26,7 +26,7 @@ for a in ("left", "right"):
 ZERO = {}
 
 
-def render(scene, q_deg, out, az=30, el=-14, dist=0.95, look=(-0.12, 0.0, 0.22), size=(1200, 800)):
+def render(scene, q_deg, out, az=30, el=-14, dist=0.95, look=(-0.12, 0.0, 0.22), size=(1200, 800), hide=()):
     """az 0 = looking at the robot's front (robot forward = body -x)."""
     m = mujoco.MjModel.from_xml_path(str(scene)); d = mujoco.MjData(m)
     m.vis.global_.offwidth, m.vis.global_.offheight = size
@@ -35,6 +35,9 @@ def render(scene, q_deg, out, az=30, el=-14, dist=0.95, look=(-0.12, 0.0, 0.22),
         if jid >= 0:
             lo, hi = m.jnt_range[jid]
             d.qpos[m.jnt_qposadr[jid]] = np.clip(math.radians(v), lo, hi)
+    for g in range(m.ngeom):                                               # e.g. the hidden stock SO101 of LeRobotNeck
+        if hide and m.body(m.geom_bodyid[g]).name.startswith(tuple(hide)):
+            m.geom_rgba[g, 3] = 0
     mujoco.mj_forward(m, d)
     cam = mujoco.MjvCamera(); cam.azimuth, cam.elevation, cam.distance = az, el, dist; cam.lookat[:] = look
     opt = mujoco.MjvOption(); opt.geomgroup[:] = [1, 1, 1, 0, 0, 0]          # visuals only, no collision hulls
@@ -58,6 +61,11 @@ def main():
                        stdout=subprocess.DEVNULL)
         render(dest / "mjcf/scene.xml", READY, OUT / f"variant_{v}.png", az=0, el=-40, dist=0.85, look=(-0.15, 0, 0.15))
     render(SCENE, READY, OUT / "variant_reference_top.png", az=0, el=-40, dist=0.85, look=(-0.15, 0, 0.15))
+    # LeRobotNeck (hardware/variants/lerobotneck.yaml, exported by build_all.py): docs image + the website's loading poster
+    neck = ROOT / "projects/web_sim/web/public/model_neck/scene.xml"
+    render(neck, READY, OUT / "lerobotneck_ready.png", az=35, el=-12, dist=1.0, look=(-0.08, 0, 0.42), hide=("stock_",))
+    render(neck, READY, ROOT / "projects/web_sim/web/public/img/lerobotneck_poster.png", az=35, el=-10, dist=1.15,
+           look=(-0.05, 0.12, 0.42), size=(1280, 760), hide=("stock_",))
 
 
 if __name__ == "__main__":

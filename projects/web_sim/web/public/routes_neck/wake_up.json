@@ -1,0 +1,99 @@
+{
+ "name": {
+  "en": "Wake up",
+  "zh": "起身唤醒"
+ },
+ "description": {
+  "en": "From the folded rest pose to standing: lift, stretch, shake it off.",
+  "zh": "从折叠的休息位站起来：抬头、伸展、甩一甩。"
+ },
+ "from": "home",
+ "speed_dps": 40,
+ "dwell_s": 0.4,
+ "waypoints": [
+  {
+   "label": {
+    "en": "Lift the head",
+    "zh": "抬起头"
+   },
+   "q": {
+    "neck_j2": 150,
+    "neck_j3": 178,
+    "neck_j6": -5
+   }
+  },
+  {
+   "label": {
+    "en": "Stand up",
+    "zh": "站起来"
+   },
+   "q": {
+    "neck_j2": 100,
+    "neck_j3": 160,
+    "neck_j6": -15
+   }
+  },
+  {
+   "label": {
+    "en": "Stretch",
+    "zh": "伸个懒腰"
+   },
+   "q": {
+    "neck_j2": 80,
+    "neck_j3": 175,
+    "neck_j6": -50
+   },
+   "dwell_s": 0.8
+  },
+  {
+   "label": {
+    "en": "Shake",
+    "zh": "甩一甩"
+   },
+   "q": {
+    "neck_j5": 18,
+    "neck_j4": 10
+   },
+   "duration_s": 0.45,
+   "dwell_s": 0
+  },
+  {
+   "label": {
+    "en": "Shake",
+    "zh": "甩一甩"
+   },
+   "q": {
+    "neck_j5": -18,
+    "neck_j4": -10
+   },
+   "duration_s": 0.5,
+   "dwell_s": 0
+  },
+  {
+   "label": {
+    "en": "Shake",
+    "zh": "甩一甩"
+   },
+   "q": {
+    "neck_j5": 0,
+    "neck_j4": 0
+   },
+   "duration_s": 0.45
+  },
+  {
+   "label": {
+    "en": "Ready",
+    "zh": "准备好了"
+   },
+   "q": {
+    "neck_j1": 0,
+    "neck_j2": 90,
+    "neck_j3": 150,
+    "neck_j4": 0,
+    "neck_j5": 0,
+    "neck_j6": -25
+   },
+   "dwell_s": 1.0
+  }
+ ]
+}

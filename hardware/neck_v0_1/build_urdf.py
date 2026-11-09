@@ -139,9 +139,10 @@ def build(out=OUT, cfg=None):
         T_cam = T_cam @ rotation_matrix(np.pi, [1, 0, 0])
     cam_visual = T_cam @ np.linalg.inv(T_h @ T(cam_off)) @ T_h @ head_visual  # D435i body follows the camera
     I = np.eye(4)
+    shown = cfg.get("body", {}).get("visuals", [Path(f).stem for f in BASE_STLS] + ["topbase2"])
     links = {
-        "wallerobot_body": [(f, I, 0.001) for f in BASE_STLS] +  # upstream top_base_link frame
-                           [("topbase2.stl", TOPBASE_VIS["topbase2.stl"], 0.001)],
+        "wallerobot_body": [(f, I, 0.001) for f in BASE_STLS if Path(f).stem in shown] +  # upstream top_base_link frame
+                           [("topbase2.stl", TOPBASE_VIS["topbase2.stl"], 0.001)] * ("topbase2" in shown),
         "neck_base": [],
         "neck_shoulder": [("Rotation_Pitch.stl", I, None), ("Rotation_Pitch_Motor.stl", I, None)],
         "neck_upper_arm": [("Upper_Arm.stl", I, None), ("Upper_Arm_Motor.stl", I, None)],

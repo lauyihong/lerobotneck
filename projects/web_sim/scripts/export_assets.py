@@ -81,5 +81,99 @@ def main():
         print(f"  {jt['name']:24s} home {math.degrees(jt['home']):+7.1f}°  [{math.degrees(jt['lower']):+7.1f}, {math.degrees(jt['upper']):+7.1f}]")
 
 
+NECK_OUT = ROOT / "projects/web_sim/web/public/model_neck"
+STOCK_DROP = ("XLeRobot_camera",)          # wrist camera meshes: not part of a stock SO101
+
+
+def export_neck(src: Path, out: Path = NECK_OUT, full: Path = SRC):
+    """LeRobotNeck web model (hardware/variants/lerobotneck.yaml): the neck-only MJCF from `src` + a stock SO101 arm.
+
+    * collision geoms and hull meshes are dropped: the showcase website only poses the model (kinematics, no contacts);
+    * a hidden `stock_*` copy of the reference robot's left arm (a stock SO101, from the full MJCF in `full`) is added next
+      to the neck, attached exactly like neck_shoulder (J1-J3 are the same parts), for the exploded view. Its joints have
+      no actuators; poses.json lists them under `stock_joints`.
+    """
+    import xml.etree.ElementTree as ET
+    if out.exists():
+        shutil.rmtree(out)
+    (out / "meshes").mkdir(parents=True)
+    neck_root = ET.parse(src / "wallerobot_static.xml").getroot()
+    full_root = ET.parse(full / "wallerobot_static.xml").getroot()
+    parent = {c: p for p in neck_root.iter() for c in p}
+
+    def strip_collision(el):
+        for p in list(el.iter()):
+            for g in [g for g in p.findall("geom") if g.get("class") == "collision"]:
+                p.remove(g)
+    strip_collision(neck_root)
+
+    # stock SO101 = full model's left arm subtree, renamed, visual geoms only, no cameras / sites
+    arm = copy_el(next(b for b in full_root.iter("body") if b.get("name") == "left_arm_shoulder"))
+    strip_collision(arm)
+    for p in list(arm.iter()):
+        for c in list(p):
+            if c.tag in ("camera", "site") or (c.tag == "geom" and c.get("mesh", "").startswith(STOCK_DROP)):
+                p.remove(c)
+        if p.get("name"):
+            p.set("name", p.get("name").replace("left_arm_", "stock_"))
+    neck_sh = next(b for b in neck_root.iter("body") if b.get("name") == "neck_shoulder")
+    arm.set("pos", neck_sh.get("pos")); arm.set("quat", neck_sh.get("quat"))
+    hold = parent[neck_sh]; hold.insert(list(hold).index(neck_sh) + 1, arm)
+
+    # mesh assets: drop hulls, add the stock parts the neck does not have
+    asset = neck_root.find("asset"); full_assets = {m.get("name"): m for m in full_root.find("asset").findall("mesh")}
+    for msh in [m for m in asset.findall("mesh") if "hull" in m.get("file") or "convex" in m.get("file")]:
+        asset.remove(msh)
+    have = {m.get("name") for m in asset.findall("mesh")}
+    for name in sorted({g.get("mesh") for g in arm.iter("geom")} - have):
+        asset.append(copy_el(full_assets[name]))
+    neck_mdir = (src / re.search(r'meshdir="([^"]+)"', (src / "wallerobot_static.xml").read_text()).group(1)).resolve()
+    full_mdir = (full / re.search(r'meshdir="([^"]+)"', (full / "wallerobot_static.xml").read_text()).group(1)).resolve()
+    files = sorted(m.get("file") for m in asset.findall("mesh"))
+    for f in files:
+        shutil.copy2(neck_mdir / f if (neck_mdir / f).exists() else full_mdir / f, out / "meshes" / f)
+    neck_root.find("compiler").set("meshdir", "meshes")
+    neck_root.set("model", "lerobotneck")
+    ET.indent(neck_root)
+    (out / "lerobotneck.xml").write_text(
+        "<!-- WEB COPY (projects/web_sim/scripts/export_assets.py --neck) of the MJCF GENERATED from "
+        "hardware/variants/lerobotneck.yaml, plus a hidden stock SO101 (stock_*) - do not edit -->\n"
+        + ET.tostring(neck_root, encoding="unicode") + "\n", encoding="utf-8")
+    scene = (src / "scene.xml").read_text(encoding="utf-8").replace("wallerobot_static.xml", "lerobotneck.xml")
+    (out / "scene.xml").write_text(scene.replace('model="wallerobot_scene"', 'model="lerobotneck_scene"'), encoding="utf-8")
+
+    neck_home = json.loads(calib.NECK_CAL.read_text(encoding="utf-8"))["poses"]["home"]["target_ticks"]
+    m = mujoco.MjModel.from_xml_path(str(out / "scene.xml"))
+    joints, stock = [], []
+    for j in range(m.njnt):
+        n = m.joint(j).name; lo, hi = m.jnt_range[j]
+        if n.startswith("stock_"):
+            stock.append({"name": n, "lower": float(lo), "upper": float(hi)})
+        else:
+            joints.append({"name": n, "lower": float(lo), "upper": float(hi),
+                           "home": round(float(np.clip(calib.tick_to_rad(n, neck_home[n]), lo, hi)), 5)})
+    (out / "poses.json").write_text(json.dumps({
+        "source": "neck_calibration.json poses.home target_ticks (clamped into the MJCF ranges); stock_joints = hidden "
+                  "stock SO101 for the exploded view", "joints": joints, "stock_joints": stock}, indent=1), encoding="utf-8")
+    listing = ["scene.xml", "lerobotneck.xml"] + [f"meshes/{f}" for f in files]
+    (out / "manifest.json").write_text(json.dumps({"entry": "scene.xml", "files": listing}, indent=0), encoding="utf-8")
+    size = sum(f.stat().st_size for f in (out / "meshes").iterdir())
+    print(f"exported LeRobotNeck: {len(files)} meshes ({size / 1e6:.1f} MB), {len(joints)} neck joints, "
+          f"{len(stock)} stock SO101 joints, {m.nu} actuators -> {out}")
+
+
+def copy_el(el):
+    import copy
+    return copy.deepcopy(el)
+
+
 if __name__ == "__main__":
-    main()
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--neck", type=Path, metavar="MJCF_DIR",
+                    help="export the LeRobotNeck model from this variant MJCF dir (build_all.py does this) instead")
+    a = ap.parse_args()
+    if a.neck:
+        export_neck(a.neck.resolve())
+    else:
+        main()

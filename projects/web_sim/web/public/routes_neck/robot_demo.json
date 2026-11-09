@@ -1,0 +1,128 @@
+{
+ "name": {
+  "en": "The real robot's demo",
+  "zh": "真机上的演示"
+ },
+ "description": {
+  "en": "The waypoints the real neck ran on 2026-11-06 (stand up, turn, side tilt, roll, lean, rest), at 25°/s here.",
+  "zh": "真机 2026-11-06 跑过的路点（站起、转头、侧摆、滚转、前倾、回休息位），这里用 25°/s。"
+ },
+ "from": "home",
+ "speed_dps": 25,
+ "dwell_s": 1.0,
+ "waypoints": [
+  {
+   "label": {
+    "en": "Stand up",
+    "zh": "站起"
+   },
+   "q": {
+    "neck_j1": -5,
+    "neck_j2": 90,
+    "neck_j3": 150,
+    "neck_j4": 0,
+    "neck_j5": 0
+   }
+  },
+  {
+   "label": {
+    "en": "Turn left",
+    "zh": "向左转头"
+   },
+   "q": {
+    "neck_j1": -45
+   }
+  },
+  {
+   "label": {
+    "en": "Turn right",
+    "zh": "向右转头"
+   },
+   "q": {
+    "neck_j1": 35
+   }
+  },
+  {
+   "label": {
+    "en": "Centre",
+    "zh": "回中"
+   },
+   "q": {
+    "neck_j1": -5
+   }
+  },
+  {
+   "label": {
+    "en": "Side tilt A",
+    "zh": "侧摆 A"
+   },
+   "q": {
+    "neck_j4": 40
+   }
+  },
+  {
+   "label": {
+    "en": "Side tilt B",
+    "zh": "侧摆 B"
+   },
+   "q": {
+    "neck_j4": -40
+   }
+  },
+  {
+   "label": {
+    "en": "Roll A",
+    "zh": "滚转 A"
+   },
+   "q": {
+    "neck_j4": 0,
+    "neck_j5": -60
+   }
+  },
+  {
+   "label": {
+    "en": "Roll B",
+    "zh": "滚转 B"
+   },
+   "q": {
+    "neck_j5": 45
+   }
+  },
+  {
+   "label": {
+    "en": "Tilt + roll",
+    "zh": "侧摆 + 滚转"
+   },
+   "q": {
+    "neck_j4": 30,
+    "neck_j5": -30
+   }
+  },
+  {
+   "label": {
+    "en": "Lean forward",
+    "zh": "前倾"
+   },
+   "q": {
+    "neck_j2": 55,
+    "neck_j3": 115,
+    "neck_j4": 0,
+    "neck_j5": 0
+   }
+  },
+  {
+   "label": {
+    "en": "Back to rest",
+    "zh": "回 home"
+   },
+   "q": {
+    "neck_j1": -5.3,
+    "neck_j2": 186.9,
+    "neck_j3": 180.3,
+    "neck_j4": 1.2,
+    "neck_j5": -1.2,
+    "neck_j6": 8.0
+   }
+  }
+ ]
+}

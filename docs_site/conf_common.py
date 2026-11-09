@@ -1,9 +1,10 @@
 """Shared Sphinx configuration for the English (docs_site/en) and Chinese (docs_site/zh) docs.
 
 Each language's conf.py sets LANG and execs this file. Build:
-    sphinx-build -W -b html docs_site/en _site          # English at /
-    sphinx-build -W -b html docs_site/zh _site/zh       # Chinese at /zh/
-The published site (GitHub Pages) also serves the browser simulator at /sim/.
+    sphinx-build -W -b html docs_site/en _site/docs          # English at /docs/
+    sphinx-build -W -b html docs_site/zh _site/docs/zh       # Chinese at /docs/zh/
+The published site (GitHub Pages) serves the LeRobotNeck showcase at / (projects/web_sim/web) and the full wallerobot
+browser simulator at /sim/.
 """
 import os
 
@@ -12,6 +13,7 @@ if "{" in OWNER:
     OWNER = "OWNER"
 REPO = f"https://github.com/{OWNER}/wallerobot"
 SITE = f"https://{OWNER}.github.io/wallerobot/"
+DOCS = SITE + "docs/"
 
 project = "wallerobot"
 author = "wallerobot contributors"
@@ -43,8 +45,9 @@ def theme(lang):
         "navigation_with_keys": False,
         "header_links_before_dropdown": 6,
         "external_links": [
+            {"name": "LeRobotNeck", "url": SITE},
             {"name": sim_label, "url": SITE + "sim/"},
-            {"name": other[0], "url": SITE + ("zh/" if lang == "en" else "")},
+            {"name": other[0], "url": DOCS + ("zh/" if lang == "en" else "")},
         ],
         "footer_start": ["copyright"],
         "footer_end": [],

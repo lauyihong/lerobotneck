@@ -1,95 +1,19 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en" data-root="./">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Wallerobot 网页模拟器</title>
-  <meta name="description" content="wallerobot v0.1（双 SO101 臂 + 6 自由度脖子）的浏览器内 MuJoCo 模拟器：键盘、鼠标和固定路线控制。纯仿真，不连接真机。" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='14' width='20' height='12' rx='3' fill='%232a6df4'/%3E%3Crect x='14' y='4' width='4' height='11' fill='%23334'/%3E%3Ccircle cx='16' cy='5' r='3' fill='%23334'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="./src/style.css" />
+  <title>LeRobotNeck</title>
+  <meta name="description" content="LeRobotNeck: a 6-DoF robot neck made from one standard SO101 arm and two new 3D-printed parts, carrying a RealSense D435i. Live MuJoCo demo, simulator and exploded view in the browser." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='13' y='12' width='6' height='18' rx='2' fill='%23222'/%3E%3Crect x='7' y='4' width='18' height='9' rx='3' fill='%23ff6a13'/%3E%3Ccircle cx='12' cy='8.5' r='2' fill='%23fff'/%3E%3Ccircle cx='20' cy='8.5' r='2' fill='%23fff'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./src/neck/neck.css" />
 </head>
 <body>
-  <main id="app">
-    <section id="stage">
-      <canvas id="view"></canvas>
-      <div id="pip-frame"></div>
-      <div id="pip-label">脖子相机（D435i 彩色）</div>
-      <div id="hud"><span id="hud-route"></span><span id="hud-fps"></span></div>
-      <button id="help-btn" class="chip" title="按键说明（?）">⌨ 按键</button>
-      <div id="loading"><div class="spin"></div><div id="loading-text">正在加载 MuJoCo…</div></div>
-      <div id="help" hidden>
-        <div class="help-card">
-          <div class="help-head"><b>按键说明</b><button class="chip" id="help-close">关闭</button></div>
-          <div class="help-grid">
-            <div><h4>左臂末端</h4>
-              <p><kbd>W</kbd>/<kbd>S</kbd> 前 / 后</p><p><kbd>A</kbd>/<kbd>D</kbd> 左 / 右</p><p><kbd>Q</kbd>/<kbd>E</kbd> 上 / 下</p>
-              <p><kbd>R</kbd>/<kbd>F</kbd> 手腕俯仰</p><p><kbd>Z</kbd>/<kbd>C</kbd> 手腕旋转</p><p><kbd>V</kbd> 夹爪开 / 合</p></div>
-            <div><h4>右臂末端</h4>
-              <p><kbd>I</kbd>/<kbd>K</kbd> 前 / 后</p><p><kbd>J</kbd>/<kbd>L</kbd> 左 / 右</p><p><kbd>U</kbd>/<kbd>O</kbd> 上 / 下</p>
-              <p><kbd>Y</kbd>/<kbd>H</kbd> 手腕俯仰</p><p><kbd>N</kbd>/<kbd>M</kbd> 手腕旋转</p><p><kbd>B</kbd> 夹爪开 / 合</p></div>
-            <div><h4>脖子与关节</h4>
-              <p><kbd>←</kbd>/<kbd>→</kbd> 转头（J1）</p><p><kbd>↑</kbd>/<kbd>↓</kbd> 相机俯仰（J6）</p>
-              <p><kbd>[</kbd>/<kbd>]</kbd> 选上一个 / 下一个关节</p><p><kbd>,</kbd>/<kbd>.</kbd> 转动选中的关节</p>
-              <p>按住 <kbd>Shift</kbd> 加速</p></div>
-            <div><h4>其他</h4>
-              <p><kbd>X</kbd> 回到 home（休息位）</p><p><kbd>G</kbd> 准备姿势</p><p><kbd>空格</kbd> 播放 / 暂停路线</p><p><kbd>P</kbd> 显示 / 隐藏相机小窗</p><p><kbd>?</kbd> 这张说明</p>
-              <p class="muted">鼠标：左键拖动旋转视角，右键平移，滚轮缩放；点一下机器人的某个部件，就选中它的关节；点手臂时末端会出现拖动手柄。</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <aside id="panel">
-      <header>
-        <div>
-          <h1>Wallerobot 网页模拟器</h1>
-          <p class="muted">双 SO101 臂 + 6 自由度脖子 · MuJoCo（浏览器内）· 纯仿真，不连接真机</p>
-        </div>
-        <div class="row">
-          <button id="ready" class="btn">准备姿势</button>
-          <button id="reset" class="btn ghost">回到 home</button>
-          <button id="pause-physics" class="btn ghost">暂停物理</button>
-          <label class="speed">速度 <input id="speed" type="range" min="10" max="180" step="5" value="60" /> <span id="speed-val">60°/s</span></label>
-        </div>
-      </header>
-
-      <details open>
-        <summary>末端位置（基座坐标：x 前 · y 左 · z 上，单位 mm）</summary>
-        <div id="ee"></div>
-      </details>
-
-      <details open>
-        <summary>固定路线</summary>
-        <div class="row">
-          <select id="route-select"></select>
-          <button id="route-play" class="btn">▶ 播放</button>
-          <button id="route-stop" class="btn ghost">■ 停止</button>
-        </div>
-        <div class="row small">
-          <label><input type="checkbox" id="route-loop" /> 循环</label>
-          <label><input type="checkbox" id="route-home" checked /> 从 home 开始</label>
-          <span id="route-desc" class="muted"></span>
-        </div>
-        <div class="progress"><div id="route-bar"></div></div>
-        <div class="rec">
-          <b>录制自己的路线</b>
-          <div class="row">
-            <button id="rec-add" class="btn ghost">＋ 记录当前姿态</button>
-            <span id="rec-count" class="muted">0 个点</span>
-            <button id="rec-play" class="btn ghost" disabled>▶ 播放录制</button>
-            <button id="rec-save" class="btn ghost" disabled>下载 JSON</button>
-            <button id="rec-clear" class="btn ghost" disabled>清空</button>
-            <label class="btn ghost file">导入 JSON<input id="route-file" type="file" accept=".json,application/json" hidden /></label>
-          </div>
-        </div>
-      </details>
-
-      <details open>
-        <summary>关节（度）</summary>
-        <div id="joints"></div>
-      </details>
-    </aside>
-  </main>
-  <script type="module" src="./src/main.js"></script>
+  <canvas id="view"></canvas>
+  <div id="labels"></div>
+  <header id="nav"></header>
+  <main id="ui"></main>
+  <div id="loading"><img id="poster" alt="" /><div class="load-box"><div class="spin"></div><div id="loading-text">Loading…</div><div class="bar"><div id="loading-bar"></div></div></div></div>
+  <script type="module" src="./src/neck/app.js"></script>
 </body>
 </html>

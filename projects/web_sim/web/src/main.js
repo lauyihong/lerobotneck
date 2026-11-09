@@ -6,6 +6,9 @@ import { Sim, ARMS, DEG, worldToBase, baseToWorld } from './sim.js';
 import { View } from './render.js';
 import { RoutePlayer, Recorder } from './routes.js';
 
+// site root relative to this page (sim/index.html sets data-root="../"; the Artifact build has no data-root)
+const ROOT = document.documentElement.dataset.root ?? './';
+
 const $ = (s) => document.querySelector(s);
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 
@@ -38,7 +41,7 @@ async function main() {
   const loadingText = $('#loading-text');
   let sim;
   try {
-    sim = await Sim.create('./model/', (f) => { loadingText.textContent = `正在加载模型… ${Math.round(f * 100)}%`; });
+    sim = await Sim.create(`${ROOT}model/`, (f) => { loadingText.textContent = `正在加载模型… ${Math.round(f * 100)}%`; });
   } catch (err) {
     loadingText.textContent = `加载失败：${err.message ?? err}`;
     console.error(err); return;
@@ -313,9 +316,9 @@ function buildPanel(sim, ctx) {
   // routes
   const sel = $('#route-select'); const routes = [];
   const desc = $('#route-desc'); const playBtn = $('#route-play');
-  fetch('./routes/index.json').then((r) => r.json()).then(async (idx) => {
+  fetch(`${ROOT}routes/index.json`).then((r) => r.json()).then(async (idx) => {
     for (const f of idx.routes) {
-      try { const rt = await (await fetch(`./routes/${f}`)).json(); addRoute(rt); } catch (err) { console.warn('route', f, err); }
+      try { const rt = await (await fetch(`${ROOT}routes/${f}`)).json(); addRoute(rt); } catch (err) { console.warn('route', f, err); }
     }
     showDesc();
   });
