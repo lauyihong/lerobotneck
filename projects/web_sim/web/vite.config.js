@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 
 // base './' = relative asset paths, so the built folder works from any sub-path (GitHub Pages project site, file server, ...)
-// Pages: index.html, play/, neck/ = the LeRobotNeck showcase (one app, three entry files so every URL opens directly);
+// Pages: index.html, play/, neck/, why/ = the LeRobotNeck showcase (one app, four entry files so every URL opens directly);
 // sim/ = the full wallerobot simulator.
 export default defineConfig({
   base: './',
@@ -14,6 +14,7 @@ export default defineConfig({
         main: resolve(import.meta.dirname, 'index.html'),
         play: resolve(import.meta.dirname, 'play/index.html'),
         neck: resolve(import.meta.dirname, 'neck/index.html'),
+        why: resolve(import.meta.dirname, 'why/index.html'),
         sim: resolve(import.meta.dirname, 'sim/index.html'),
       },
     },

@@ -10,7 +10,8 @@ LeRobotNeck 是一套开源、**可配置**的机器人描述，对应一台固�
 URDF、MuJoCo 模型和网页模拟器都从同一个 YAML 文件生成。想改机器人，就改这个文件，不用去改仿真器的源码。（目录和文件名还沿用项目的旧名字 `wallerobot`。）
 
 - **展示网站：** [LeRobotNeck 网站](https://lauyihong.github.io/lerobotneck/)：单独展示 6 自由度脖子，有实时演示、脖子模拟器，
-  以及一张爆炸图，讲一条 SO101 机械臂加一个新打印的连杆（再用上 XLeRobot 的软指夹爪固定爪）怎样变成这个脖子。
+  一张爆炸图，讲一条 SO101 机械臂加一个新打印的连杆（再用上 XLeRobot 的软指夹爪固定爪）怎样变成这个脖子，
+  还有一页讲为什么要主动感知（固定相机、两轴头、SO101 机械臂和脖子各能看到什么、能拍到什么）。
 - **在线试玩：** [网页模拟器](https://lauyihong.github.io/lerobotneck/sim/)。MuJoCo 直接在浏览器里运行，不用安装任何东西。
 - **文档：** [https://lauyihong.github.io/lerobotneck/docs/zh/](https://lauyihong.github.io/lerobotneck/docs/zh/)，有中文和英文两种。
 

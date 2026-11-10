@@ -1,4 +1,4 @@
-// LeRobotNeck showcase: one page app, three routes (/ home, /play/ simulator, /neck/ exploded view) on one shared
+// LeRobotNeck showcase: one page app, four routes (/ home, /play/ simulator, /neck/ exploded view, /why/ active perception) on one shared
 // WebGL canvas, so switching pages only moves the camera and swaps the overlay UI. Simulation only.
 import * as THREE from 'three';
 import { Sim, DEG } from '../sim.js';
@@ -7,10 +7,11 @@ import { t, getLang, setLang, onLang } from './i18n.js';
 import { homePage } from './home.js';
 import { playPage } from './play.js';
 import { neckPage } from './explode.js';
+import { whyPage } from './why.js';
 
 // site root (absolute URL) from the page's data-root ("./" on /, "../" on /play/ and /neck/)
 const ROOT = new URL(document.documentElement.dataset.root ?? './', location.href);
-const PATHS = { home: '', play: 'play/', neck: 'neck/' };
+const PATHS = { home: '', play: 'play/', neck: 'neck/', why: 'why/' };
 export const DOCS = new URL('docs/', ROOT).href;
 export const GITHUB = 'https://github.com/lauyihong/lerobotneck';
 
@@ -33,6 +34,7 @@ function pageFromLocation() {
   const rel = decodeURI(location.pathname).slice(decodeURI(ROOT.pathname).length);
   if (rel.startsWith('play')) return 'play';
   if (rel.startsWith('neck')) return 'neck';
+  if (rel.startsWith('why')) return 'why';
   return 'home';
 }
 
@@ -96,7 +98,7 @@ async function main() {
     go, href: (name) => new URL(PATHS[name], ROOT).href,
   };
 
-  const pages = { home: homePage(ctx), play: playPage(ctx), neck: neckPage(ctx) };
+  const pages = { home: homePage(ctx), play: playPage(ctx), neck: neckPage(ctx), why: whyPage(ctx) };
   let current = null;
 
   function go(name, { push = true } = {}) {
@@ -120,7 +122,7 @@ async function main() {
     nav.append(
       el('a', { class: 'brand', href: ctx.href('home'), onclick: (e) => { e.preventDefault(); go('home'); } },
         el('span', { class: 'logo' }), el('span', { class: 'name' }, 'LeRobotNeck')),
-      el('nav', {}, link('home'), link('play'), link('neck'),
+      el('nav', {}, link('home'), link('play'), link('neck'), link('why'),
         el('a', { href: DOCS }, t('nav.docs')), el('a', { href: GITHUB, rel: 'noopener', class: 'gh' }, t('nav.github'))),
       el('button', { class: 'lang', onclick: () => setLang(getLang() === 'en' ? 'zh' : 'en') }, t('lang.other')),
     );
@@ -143,8 +145,8 @@ async function main() {
     }
     // keep the robot clear of each page's text / panel on wide screens
     const wide = innerWidth > 760;
-    view.shiftTarget = wide ? ({ home: 0.2, play: -0.17, neck: 0.14 }[ctx.page] ?? 0) : 0;
-    view.shiftYTarget = wide ? 0 : ({ home: 0.2, play: 0.1, neck: 0.16 }[ctx.page] ?? 0);   // phones: UI at the bottom
+    view.shiftTarget = wide ? ({ home: 0.2, play: -0.17, neck: 0.14, why: -0.17 }[ctx.page] ?? 0) : 0;
+    view.shiftYTarget = wide ? 0 : ({ home: 0.2, play: 0.1, neck: 0.16, why: 0.14 }[ctx.page] ?? 0);   // phones: UI at the bottom
     current?.update?.(dt);
     sim.step(dt);
     view.draw(current?.helpers ?? []);

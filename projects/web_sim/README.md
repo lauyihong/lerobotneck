@@ -5,7 +5,7 @@ talks to hardware. One build, two apps:
 
 | URL | what | source |
 |---|---|---|
-| https://lauyihong.github.io/lerobotneck/ | **LeRobotNeck** showcase: the neck demo (home), `play/` neck simulator, `neck/` exploded view | `web/index.html`, `play/`, `neck/`, `src/neck/` |
+| https://lauyihong.github.io/lerobotneck/ | **LeRobotNeck** showcase: the neck demo (home), `play/` neck simulator, `neck/` exploded view, `why/` active perception | `web/index.html`, `play/`, `neck/`, `why/`, `src/neck/` |
 | https://lauyihong.github.io/lerobotneck/sim/ | full wallerobot simulator (two arms + neck) | `web/sim/index.html`, `src/main.js` |
 
 The docs are served next to them at `/docs/` (see `.github/workflows/pages.yml`).
@@ -20,7 +20,14 @@ The docs are served next to them at `/docs/` (see `.github/workflows/pages.yml`)
 - Demos and desk scene: `web/public/routes_neck/*.json` (`scene.json` = the objects on the desk), written by
   `scripts/make_neck_routes.py` (labels in English and Chinese). The two active-perception demos (circle the green
   block, look inside the box) are solved with inverse kinematics on `model_neck`, and the script checks with ray
-  tests that the things in the box are hidden from the ready pose and seen from the solved viewpoints.
+  tests that the things in the box are hidden from the ready pose and seen from the solved viewpoints. The simulator
+  and every demo start from the folded rest pose.
+- `why/` (active perception): which parts of the same desk scene six camera setups can see (fixed camera, XLeRobot
+  2-axis head, stock SO101 + wrist camera, SO101-X = the camera holder on the stock gripper, LeRobotNeck, and the
+  LeRobotNeck-02 concept with a longer J3-J4 link), as coloured point clouds, with each setup's 10 best views, how
+  many of 80 requested views each can take, and how much of the image the robot itself covers.
+  `scripts/make_coverage.py` precomputes it into `web/public/why/` (run after `make_neck_routes.py`; ray tests with
+  MuJoCo `mj_multiRay`, about 3 min).
 - UI text: `src/neck/i18n.js` (English first, Chinese; follows the browser language, switch in the top bar).
 
 ## Full simulator
