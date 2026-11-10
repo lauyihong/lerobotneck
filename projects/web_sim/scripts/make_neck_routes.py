@@ -313,7 +313,7 @@ def main():
         "from": "home", "speed_dps": 25, "dwell_s": 1.0,
         "waypoints": [{"label": L(EN[w["label"]], w["label"]), "q": w["q"]} for w in src["waypoints"]]}
     r = ROUTES
-    show = (r["wake_up"]["waypoints"][:3] + [wp("Ready", "准备姿势", READY, dwell_s=0.6)]
+    show = ([wp("Rest (zero position)", "静止（零位）", REST, duration_s=0.5, dwell_s=1.5)] + r["wake_up"]["waypoints"][:3] + [wp("Ready", "准备姿势", READY, dwell_s=0.6)]
             + r["look_around"]["waypoints"][1:] + r["curious_tilt"]["waypoints"][1:3]
             + [wp("Upright", "回正", {"neck_j4": 0, "neck_j5": 0, "neck_j6": -25})]
             + r["peek_desk"]["waypoints"][1:2] + [wp("Back to rest", "回到休息位", REST, dwell_s=2.0)])

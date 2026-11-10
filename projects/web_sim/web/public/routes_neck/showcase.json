@@ -13,6 +13,22 @@
  "waypoints": [
   {
    "label": {
+    "en": "Rest (zero position)",
+    "zh": "静止（零位）"
+   },
+   "q": {
+    "neck_j1": 6.8,
+    "neck_j2": 186.9,
+    "neck_j3": 180.7,
+    "neck_j4": 0.2,
+    "neck_j5": 0,
+    "neck_j6": 10.7
+   },
+   "duration_s": 0.5,
+   "dwell_s": 1.5
+  },
+  {
+   "label": {
     "en": "Lift the head",
     "zh": "抬起头"
    },
